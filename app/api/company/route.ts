@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { prisma } from "@/lib/prisma";
 import { companyFormSchema } from "@/lib/validations";
 import type { ApiResponse } from "@/types";
 
@@ -28,24 +28,20 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
     );
   }
 
-  // ── Init Supabase ─────────────────────────────────────────────────────
-  let supabase;
-  try {
-    supabase = createServerSupabaseClient();
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Server configuration error.";
+  // ── Insert into Postgres (Prisma) ─────────────────────────────────────
+  const data = parsed.data;
+  const targetStartDate = data.target_start_date ? new Date(data.target_start_date) : null;
+
+  if (targetStartDate && Number.isNaN(targetStartDate.getTime())) {
     return NextResponse.json(
-      { success: false, error: message },
-      { status: 500 }
+      { success: false, error: "target_start_date: Please provide a valid date." },
+      { status: 400 }
     );
   }
 
-  // ── Insert into Supabase ───────────────────────────────────────────────
-  const data = parsed.data;
-
-  const { error: insertError } = await supabase
-    .from("company_submissions")
-    .insert({
+  try {
+    await prisma.companySubmission.create({
+      data: {
       company_name: data.company_name,
       company_website: data.company_website,
       contact_name: data.contact_name,
@@ -63,12 +59,12 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
       work_arrangement: data.work_arrangement,
       tech_stack: data.tech_stack,
       salary_budget: data.salary_budget ?? null,
-      target_start_date: data.target_start_date || null,
+      target_start_date: targetStartDate,
       role_description: data.role_description ?? null,
+      },
     });
-
-  if (insertError) {
-    console.error("Supabase insert error:", insertError);
+  } catch (error) {
+    console.error("Prisma insert error:", error);
     return NextResponse.json(
       { success: false, error: "Failed to submit your request. Please try again." },
       { status: 500 }

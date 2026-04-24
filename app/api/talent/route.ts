@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { prisma } from "@/lib/prisma";
 import { talentFormSchema } from "@/lib/validations";
 import type { ApiResponse } from "@/types";
 
@@ -101,10 +102,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
     resumeUrl = storagePath;
   }
 
-  // ── Insert into Supabase ───────────────────────────────────────────────
-  const { error: insertError } = await supabase
-    .from("talent_submissions")
-    .insert({
+  // ── Insert into Postgres (Prisma) ─────────────────────────────────────
+  try {
+    await prisma.talentSubmission.create({
+      data: {
       full_name: parsed.data.full_name,
       email: parsed.data.email,
       linkedin_url: parsed.data.linkedin_url,
@@ -121,10 +122,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
       work_arrangement: parsed.data.work_arrangement,
       bio: parsed.data.bio ?? null,
       resume_url: resumeUrl,
+      },
     });
-
-  if (insertError) {
-    console.error("Supabase insert error:", insertError);
+  } catch (error) {
+    console.error("Prisma insert error:", error);
     return NextResponse.json(
       { success: false, error: "Failed to save your profile. Please try again." },
       { status: 500 }

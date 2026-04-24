@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model TalentSubmission {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at         DateTime? @default(now()) @db.Timestamptz(6)
+  full_name          String
+  email              String
+  linkedin_url       String
+  github_url         String?
+  location           String
+  open_to_relocation String?
+  primary_role       String
+  years_experience   String
+  tech_stack         String
+  employment_status  String
+  expected_salary    String?
+  work_arrangement   String[]
+  bio                String?
+  resume_url         String?
+  country            String?
+  phone              String?
+
+  @@map("talent_submissions")
+}
+
+model CompanySubmission {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at        DateTime? @default(now()) @db.Timestamptz(6)
+  company_name      String
+  company_website   String
+  contact_name      String
+  contact_title     String
+  contact_email     String
+  company_size      String
+  company_location  String
+  role_title        String
+  role_type         String
+  seniority_level   String
+  number_of_roles   String
+  employment_type   String
+  work_arrangement  String
+  tech_stack        String
+  salary_budget     String?
+  target_start_date DateTime? @db.Date
+  role_description  String?
+  country           String?
+  phone             String?
+
+  @@map("company_submissions")
+}
