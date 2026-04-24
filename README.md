@@ -62,6 +62,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 4. Paste and click **Run**
 
 This creates:
+
 - `talent_submissions` table
 - `company_submissions` table
 - Row Level Security policies (anon INSERT only)
@@ -83,14 +84,14 @@ Open [http://localhost:3000](http://localhost:3000).
 |---|---|
 | `/` | Landing page — hero, how it works, roles, why SA, CTAs |
 | `/talent` | Engineer registration form |
-| `/companies` | Company hiring request form |
+| `/company` | Company hiring request form |
 
 ## API Routes
 
 | Route | Method | Description |
 |---|---|---|
 | `/api/talent` | POST | Save talent submission (multipart, optional PDF upload) |
-| `/api/companies` | POST | Save company hiring request (JSON) |
+| `/api/company` | POST | Save company hiring request (JSON) |
 
 ---
 
@@ -102,10 +103,10 @@ app/
 ├── page.tsx                # Landing page (/)
 ├── globals.css             # Global styles, dot-grid pattern
 ├── talent/page.tsx         # Talent registration (/talent)
-├── companies/page.tsx      # Company hiring request (/companies)
+├── company/page.tsx      # Company hiring request (/company)
 └── api/
     ├── talent/route.ts     # POST — save talent profile
-    └── companies/route.ts  # POST — save hiring request
+    └── company/route.ts  # POST — save hiring request
 components/
 ├── Navbar.tsx              # Fixed navbar with scroll-state + mobile menu
 ├── Footer.tsx              # 3-column footer

@@ -137,7 +137,7 @@ export function Footer() {
               <ul className="flex flex-col gap-3" role="list">
                 {[
                   { href: "/", label: "Home" },
-                  { href: "/companies", label: "For Companies" },
+                  { href: "/company", label: "For Company" },
                   { href: "/talent", label: "For Talent" },
                 ].map((link) => (
                   <li key={link.href}>

@@ -51,7 +51,10 @@ const EMPLOYMENT_TYPE_OPTIONS = [
 
 const WORK_ARRANGEMENT_OPTIONS = [
   { value: "Fully remote", label: "Fully remote" },
-  { value: "Remote with occasional travel", label: "Remote with occasional travel" },
+  {
+    value: "Remote with occasional travel",
+    label: "Remote with occasional travel",
+  },
 ];
 
 export function CompanyForm() {
@@ -73,7 +76,7 @@ export function CompanyForm() {
     setSubmitError(null);
 
     try {
-      const res = await fetch("/api/companies", {
+      const res = await fetch("/api/company", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -85,7 +88,7 @@ export function CompanyForm() {
         setSubmitError(
           "error" in json
             ? json.error
-            : "Something went wrong. Please try again."
+            : "Something went wrong. Please try again.",
         );
         return;
       }
@@ -93,7 +96,7 @@ export function CompanyForm() {
       setSubmitted(true);
     } catch {
       setSubmitError(
-        "Could not submit your request. Please check your connection and try again."
+        "Could not submit your request. Please check your connection and try again.",
       );
     }
   };

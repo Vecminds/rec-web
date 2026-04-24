@@ -52,7 +52,7 @@ export default function CompaniesPage() {
           <div className="flex flex-col gap-8">
             <div>
               <span className="text-xs font-semibold text-accent uppercase tracking-widest block mb-4">
-                For companies
+                For company
               </span>
               <h1 className="font-display font-bold text-3xl text-white mb-4 leading-tight">
                 Tell us what you need.
@@ -99,7 +99,9 @@ export default function CompaniesPage() {
             </h2>
             <p className="text-sm text-text-tertiary">
               All fields marked with{" "}
-              <span className="text-accent font-medium" aria-label="required">*</span>{" "}
+              <span className="text-accent font-medium" aria-label="required">
+                *
+              </span>{" "}
               are required.
             </p>
           </div>

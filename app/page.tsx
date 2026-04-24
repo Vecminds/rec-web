@@ -13,7 +13,11 @@ const fadeUp: Variants = {
   visible: (delay: number = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const, delay },
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94] as const,
+      delay,
+    },
   }),
 };
 
@@ -21,7 +25,11 @@ const fadeIn: Variants = {
   hidden: { opacity: 0 },
   visible: (delay: number = 0) => ({
     opacity: 1,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const, delay },
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.46, 0.45, 0.94] as const,
+      delay,
+    },
   }),
 };
 
@@ -104,13 +112,19 @@ export default function HomePage() {
         {/* Subtle brand glow */}
         <div
           className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(16,39,112,0.04) 0%, transparent 65%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(16,39,112,0.04) 0%, transparent 65%)",
+          }}
           aria-hidden="true"
         />
         {/* Gold accent glow */}
         <div
           className="absolute -top-20 right-0 w-[400px] h-[400px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(242,174,28,0.06) 0%, transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(242,174,28,0.06) 0%, transparent 70%)",
+          }}
           aria-hidden="true"
         />
 
@@ -119,7 +133,10 @@ export default function HomePage() {
             {/* Badge */}
             <motion.div variants={fadeUp} custom={0} className="mb-8">
               <span className="inline-flex items-center gap-2 text-xs font-semibold text-brand bg-brand-lighter border border-brand/15 rounded-full px-4 py-2 uppercase tracking-widest">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" aria-hidden="true" />
+                <span
+                  className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"
+                  aria-hidden="true"
+                />
                 Nepal &amp; South Asia
               </span>
             </motion.div>
@@ -146,14 +163,18 @@ export default function HomePage() {
               className="text-lg md:text-xl text-text-secondary leading-relaxed mb-10 max-w-2xl"
             >
               We source, screen, and prepare software engineers, AI/ML
-              practitioners, and DevOps specialists from Nepal and South Asia for
-              remote-first global companies.
+              practitioners, and DevOps specialists from Nepal and South Asia
+              for remote-first global companies.
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={fadeUp} custom={0.3} className="flex flex-wrap gap-4 mb-16">
+            <motion.div
+              variants={fadeUp}
+              custom={0.3}
+              className="flex flex-wrap gap-4 mb-16"
+            >
               <Link
-                href="/companies"
+                href="/company"
                 className={buttonVariants({ variant: "primary", size: "lg" })}
               >
                 Hire talent
@@ -180,8 +201,12 @@ export default function HomePage() {
                 { value: "Nepal & SA", label: "Talent source" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-1">
-                  <span className="font-display font-bold text-xl text-text-primary">{stat.value}</span>
-                  <span className="text-xs text-text-tertiary uppercase tracking-wider">{stat.label}</span>
+                  <span className="font-display font-bold text-xl text-text-primary">
+                    {stat.value}
+                  </span>
+                  <span className="text-xs text-text-tertiary uppercase tracking-wider">
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </motion.div>
@@ -190,7 +215,10 @@ export default function HomePage() {
       </section>
 
       {/* ── 2. How it works ───────────────────────────────────────────── */}
-      <section className="bg-background-alt section-padding" aria-labelledby="how-it-works-heading">
+      <section
+        className="bg-background-alt section-padding"
+        aria-labelledby="how-it-works-heading"
+      >
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial="hidden"
@@ -363,7 +391,10 @@ export default function HomePage() {
                 className="flex flex-col gap-4"
               >
                 <div className="w-10 h-10 rounded-xl bg-brand-lighter border border-brand/15 flex items-center justify-center flex-shrink-0">
-                  <div className="w-3 h-3 rounded-full bg-brand" aria-hidden="true" />
+                  <div
+                    className="w-3 h-3 rounded-full bg-brand"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div>
                   <h3 className="font-display font-semibold text-lg text-text-primary mb-2">
@@ -412,8 +443,8 @@ export default function HomePage() {
               className="text-text-secondary text-lg leading-relaxed mb-8"
             >
               We work with a curated pool of mid-to-senior tech professionals.
-              If you&apos;re open to remote global opportunities, join our talent
-              pool.
+              If you&apos;re open to remote global opportunities, join our
+              talent pool.
             </motion.p>
             <motion.div variants={fadeUp} custom={0.3}>
               <Link
@@ -462,11 +493,12 @@ export default function HomePage() {
               custom={0.1}
               className="text-white/70 text-lg mb-10 max-w-md mx-auto"
             >
-              Tell us what you&apos;re looking for. We&apos;ll come back with a plan.
+              Tell us what you&apos;re looking for. We&apos;ll come back with a
+              plan.
             </motion.p>
             <motion.div variants={fadeUp} custom={0.2}>
               <Link
-                href="/companies"
+                href="/company"
                 className="inline-flex items-center justify-center font-sans font-semibold rounded-lg transition-all duration-200 bg-accent text-background-dark hover:bg-accent-hover shadow-sm hover:shadow-md px-8 py-4 text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background-dark"
               >
                 Get started
