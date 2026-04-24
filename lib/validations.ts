@@ -28,6 +28,16 @@ export const talentFormSchema = z.object({
     .optional()
     .or(z.literal("")),
 
+  country: z
+    .string()
+    .length(2, "Please select your country"),
+
+  phone: z
+    .string()
+    .min(5, "Please enter a valid phone number")
+    .max(20, "Phone number is too long")
+    .regex(/^[\d\s\-]+$/, "Phone number may only contain digits, spaces, and dashes"),
+
   location: z
     .string()
     .min(2, "Location is required")
@@ -129,6 +139,16 @@ export const companyFormSchema = z.object({
     .string()
     .min(1, "Work email is required")
     .email("Please enter a valid email address"),
+
+  country: z
+    .string()
+    .length(2, "Please select your country"),
+
+  phone: z
+    .string()
+    .min(5, "Please enter a valid phone number")
+    .max(20, "Phone number is too long")
+    .regex(/^[\d\s\-]+$/, "Phone number may only contain digits, spaces, and dashes"),
 
   company_size: z
     .string()

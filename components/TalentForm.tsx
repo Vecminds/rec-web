@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2 } from "lucide-react";
 import { talentFormSchema, type TalentFormValues } from "@/lib/validations";
+import { getCountryByCode } from "@/lib/countries";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
+import { CountrySelect } from "@/components/ui/CountrySelect";
+import { PhoneInput } from "@/components/ui/PhoneInput";
 import type { ApiResponse } from "@/types";
 
 const PRIMARY_ROLE_OPTIONS = [
@@ -58,16 +61,30 @@ export function TalentForm() {
     handleSubmit,
     watch,
     setValue,
+    trigger,
     formState: { errors, isSubmitting },
   } = useForm<TalentFormValues>({
     resolver: zodResolver(talentFormSchema),
     defaultValues: {
       work_arrangement: [],
+      country: "",
+      phone: "",
     },
   });
 
   const bioValue = watch("bio") ?? "";
   const selectedArrangements = watch("work_arrangement") ?? [];
+  const selectedCountry = watch("country") ?? "";
+  const phoneValue = watch("phone") ?? "";
+
+  const countryData = selectedCountry ? getCountryByCode(selectedCountry) : undefined;
+
+  // When country changes, trigger validation for the country field
+  useEffect(() => {
+    if (selectedCountry) {
+      void trigger("country");
+    }
+  }, [selectedCountry, trigger]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -106,6 +123,12 @@ export function TalentForm() {
   const onSubmit = async (data: TalentFormValues) => {
     setSubmitError(null);
 
+    // Validate resume is provided
+    if (!resumeFile) {
+      setResumeError("Please upload your resume / CV.");
+      return;
+    }
+
     try {
       const formData = new FormData();
 
@@ -118,10 +141,8 @@ export function TalentForm() {
         }
       });
 
-      // Append resume if present
-      if (resumeFile) {
-        formData.append("resume", resumeFile);
-      }
+      // Append resume
+      formData.append("resume", resumeFile);
 
       const res = await fetch("/api/talent", {
         method: "POST",
@@ -222,6 +243,28 @@ export function TalentForm() {
           helpText="Optional"
           {...register("github_url")}
         />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <CountrySelect
+            id="country"
+            label="Country"
+            required
+            value={selectedCountry}
+            onChange={(code) => setValue("country", code, { shouldValidate: true })}
+            error={errors.country?.message}
+          />
+          <PhoneInput
+            id="phone"
+            label="Mobile number"
+            required
+            dialCode={countryData?.dialCode ?? ""}
+            flag={countryData?.flag ?? ""}
+            value={phoneValue}
+            onChange={(val) => setValue("phone", val, { shouldValidate: true })}
+            error={errors.phone?.message}
+            placeholder="e.g. 9812345678"
+          />
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Input
@@ -391,8 +434,11 @@ export function TalentForm() {
             className="text-sm font-medium text-text-primary"
           >
             Resume / CV
+            <span className="ml-1 text-accent" aria-hidden="true">
+              *
+            </span>
             <span className="ml-1 text-text-tertiary text-xs">
-              (optional — PDF only, max 5MB)
+              (PDF only, max 5MB)
             </span>
           </label>
           <div

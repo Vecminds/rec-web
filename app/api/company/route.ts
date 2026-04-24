@@ -51,6 +51,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
       contact_name: data.contact_name,
       contact_title: data.contact_title,
       contact_email: data.contact_email,
+      country: data.country,
+      phone: data.phone,
       company_size: data.company_size,
       company_location: data.company_location,
       role_title: data.role_title,

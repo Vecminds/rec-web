@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2 } from "lucide-react";
 import { companyFormSchema, type CompanyFormValues } from "@/lib/validations";
+import { getCountryByCode } from "@/lib/countries";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
+import { CountrySelect } from "@/components/ui/CountrySelect";
+import { PhoneInput } from "@/components/ui/PhoneInput";
 import type { ApiResponse } from "@/types";
 
 const COMPANY_SIZE_OPTIONS = [
@@ -66,12 +69,29 @@ export function CompanyForm() {
     register,
     handleSubmit,
     watch,
+    setValue,
+    trigger,
     formState: { errors, isSubmitting },
   } = useForm<CompanyFormValues>({
     resolver: zodResolver(companyFormSchema),
+    defaultValues: {
+      country: "",
+      phone: "",
+    },
   });
 
   const roleDescValue = watch("role_description") ?? "";
+  const selectedCountry = watch("country") ?? "";
+  const phoneValue = watch("phone") ?? "";
+
+  const countryData = selectedCountry ? getCountryByCode(selectedCountry) : undefined;
+
+  // When country changes, trigger validation for the country field
+  useEffect(() => {
+    if (selectedCountry) {
+      void trigger("country");
+    }
+  }, [selectedCountry, trigger]);
 
   const onSubmit = async (data: CompanyFormValues) => {
     setSubmitError(null);
@@ -188,6 +208,28 @@ export function CompanyForm() {
           error={errors.contact_email?.message}
           {...register("contact_email")}
         />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <CountrySelect
+            id="country"
+            label="Country"
+            required
+            value={selectedCountry}
+            onChange={(code) => setValue("country", code, { shouldValidate: true })}
+            error={errors.country?.message}
+          />
+          <PhoneInput
+            id="phone"
+            label="Mobile number"
+            required
+            dialCode={countryData?.dialCode ?? ""}
+            flag={countryData?.flag ?? ""}
+            value={phoneValue}
+            onChange={(val) => setValue("phone", val, { shouldValidate: true })}
+            error={errors.phone?.message}
+            placeholder="e.g. 9812345678"
+          />
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Select
