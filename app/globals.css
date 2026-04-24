@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─────────────────────────────────────────────────────────────── */
+
+:root {
+  --background: #102770;
+  --foreground: #F5F5F5;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #102770;
+  color: #F5F5F5;
+  font-family: var(--font-dm-sans), sans-serif;
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0C1D54;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E4299;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2A53B0;
+}
+
+/* ─── Dot Grid Background Pattern ───────────────────────────────────────── */
+
+.dot-grid {
+  position: relative;
+}
+
+.dot-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(242, 174, 28, 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dot-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 60%,
+    #102770 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Line Grid Pattern (alternate) ─────────────────────────────────────── */
+
+.line-grid {
+  position: relative;
+}
+
+.line-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(26, 58, 140, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 58, 140, 0.3) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Selection ─────────────────────────────────────────────────────────── */
+
+::selection {
+  background-color: rgba(242, 174, 28, 0.25);
+  color: #F5F5F5;
+}
+
+/* ─── Focus Styles ──────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid #F2AE1C;
+  outline-offset: 2px;
+}
+
+/* ─── Form element reset ─────────────────────────────────────────────────── */
+
+input, select, textarea {
+  background-color: #15307A;
+  color: #F5F5F5;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6) sepia(1) saturate(2) hue-rotate(185deg);
+  cursor: pointer;
+}
+
+/* ─── Utility ──────────────────────────────────────────────────────────── */
+
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
