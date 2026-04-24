@@ -2,6 +2,12 @@
 
 This guide covers how to manage schema changes in Recruitencer with Prisma + Supabase Postgres.
 
+## Ownership Rules (Project Standard)
+
+- Prisma owns table schema and app CRUD.
+- Supabase owns infra capabilities (hosting, Storage, RLS/policies).
+- `supabase/migrations.sql` is bootstrap/platform SQL, not the day-to-day app schema source.
+
 ---
 
 ## Project Structure
@@ -24,7 +30,7 @@ supabase/
 |------|---------|
 | `prisma/schema.prisma` | Prisma models for app tables (`talent_submissions`, `company_submissions`). |
 | `prisma/migrations/*` | Prisma-managed migration history used by `prisma migrate`. |
-| `supabase/migrations.sql` | Bootstrap SQL for fresh Supabase project setup (tables, RLS, storage). |
+| `supabase/migrations.sql` | Bootstrap SQL for fresh Supabase project setup (tables, policies, storage). |
 | `supabase/migrations/*.sql` | Optional manual SQL patches (use only when Prisma cannot express the change cleanly). |
 
 ---
@@ -102,7 +108,7 @@ If SQL-first was used for schema changes, run `npx prisma db pull` and ensure `p
 - [ ] **Regenerate** client via `npm run prisma:generate`
 - [ ] **Update** `supabase/migrations.sql` if bootstrap SQL is impacted
 - [ ] **Update** the Zod validation schema in `lib/validations.ts` if fields were added/changed
-- [ ] **Update** the API route(s) in `app/api/` to read and insert the new fields
+- [ ] **Update** the API route(s) in `app/api/` to read and write the new fields via Prisma
 - [ ] **Update** the form component(s) to capture the new fields from the user
 
 ---

@@ -70,7 +70,7 @@ This creates:
 
 - `talent_submissions` table
 - `company_submissions` table
-- Row Level Security policies (anon INSERT only)
+- Row Level Security and bucket policies
 - `resumes` private storage bucket (PDF only, 5MB limit)
 
 ### 5. Validate Prisma setup
@@ -155,10 +155,16 @@ supabase/migrations.sql     # Executable SQL for tables + RLS + storage
 
 - Form writes to `talent_submissions` and `company_submissions` are server-side via **Prisma**
 - Supabase client (anon key) is still used for resume upload to the `resumes` bucket
-- Existing RLS policies remain in Supabase for direct client-side inserts (if ever enabled)
+- Supabase RLS and bucket policies are kept as infra-level guardrails
 - Resume files go to a **private storage bucket** — no public access
 - The `resume_url` field stores the **storage path**, not a public URL
 - `GET /api/health/db` provides a lightweight DB health probe
+
+## Ownership Rules
+
+- Prisma owns table schema (`prisma/schema.prisma`) and app CRUD in API routes
+- Supabase owns infra features (hosting, Storage, RLS/policies)
+- `supabase/migrations.sql` is treated as bootstrap/platform SQL, not day-to-day app schema source
 
 ---
 

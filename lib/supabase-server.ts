@@ -1,9 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
 
 /**
- * Server-side Supabase client for use in Route Handlers only.
- * Uses the anon key — security is enforced by RLS policies.
- * Call this function inside each route handler (do not export a singleton).
+ * Server-side Supabase client for infra features only (Storage, Auth, policies).
+ * Project rule: Prisma owns table CRUD, Supabase owns platform capabilities.
+ * Uses the anon key; call inside route handlers (no singleton export).
  */
 export function createServerSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;

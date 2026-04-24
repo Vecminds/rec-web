@@ -48,7 +48,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
     );
   }
 
-  // ── Init Supabase ─────────────────────────────────────────────────────
+  // ── Init Supabase (infra: storage upload only) ───────────────────────
   let supabase;
   try {
     supabase = createServerSupabaseClient();
