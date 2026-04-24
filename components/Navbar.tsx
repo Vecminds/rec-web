@@ -44,7 +44,7 @@ export function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-background-dark/95 backdrop-blur-md border-b border-border shadow-lg"
+            ? "bg-white/90 backdrop-blur-md border-b border-border shadow-sm"
             : "bg-transparent"
         }`}
       >
@@ -52,17 +52,17 @@ export function Navbar() {
           className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between"
           aria-label="Main navigation"
         >
-          {/* Wordmark */}
+          {/* Logo */}
           <Link
             href="/"
-            className="font-display font-bold text-xl text-text-primary tracking-tight hover:text-accent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+            className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded"
             aria-label="Recruitencer — home"
           >
             <Image
-              src="/brand/Logo--white.png"
-              alt="Logo"
+              src="/brand/Logo.png"
+              alt="Recruitencer"
               width={200}
-              height={200}
+              height={40}
               className="w-36 h-auto"
               priority
             />
@@ -76,10 +76,10 @@ export function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`text-sm font-medium transition-colors duration-200 relative pb-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded
+                    className={`text-sm font-medium transition-colors duration-200 relative pb-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded
                       ${
                         isActive
-                          ? "text-accent"
+                          ? "text-brand"
                           : "text-text-secondary hover:text-text-primary"
                       }`}
                     aria-current={isActive ? "page" : undefined}
@@ -87,7 +87,7 @@ export function Navbar() {
                     {link.label}
                     {isActive && (
                       <span
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand rounded-full"
                         aria-hidden="true"
                       />
                     )}
@@ -99,7 +99,7 @@ export function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 text-text-secondary hover:text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+            className="md:hidden p-2 text-text-secondary hover:text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen ? "true" : "false"}
@@ -128,21 +128,21 @@ export function Navbar() {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-background-darkest/80 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/20 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
           aria-hidden="true"
         />
 
         {/* Drawer */}
         <div
-          className={`absolute top-0 right-0 h-full w-72 bg-background-dark border-l border-border flex flex-col transition-transform duration-300 ease-out ${
+          className={`absolute top-0 right-0 h-full w-72 bg-white border-l border-border flex flex-col transition-transform duration-300 ease-out shadow-xl ${
             mobileOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <div className="h-16 flex items-center justify-end px-6">
             <button
               onClick={() => setMobileOpen(false)}
-              className="p-2 text-text-secondary hover:text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+              className="p-2 text-text-secondary hover:text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded"
               aria-label="Close menu"
             >
               <X className="w-5 h-5" aria-hidden="true" />
@@ -158,8 +158,8 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-base font-medium py-3 border-b border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded
-                    ${isActive ? "text-accent" : "text-text-secondary hover:text-text-primary"}`}
+                  className={`text-base font-medium py-3 border-b border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded
+                    ${isActive ? "text-brand" : "text-text-secondary hover:text-text-primary"}`}
                   aria-current={isActive ? "page" : undefined}
                 >
                   {link.label}

@@ -31,7 +31,7 @@ export function Textarea({
       <div className="flex items-center justify-between">
         <label
           htmlFor={id}
-          className="text-sm font-medium text-text-secondary"
+          className="text-sm font-medium text-text-primary"
         >
           {label}
           {required && (
@@ -45,7 +45,7 @@ export function Textarea({
             id={countId}
             className={`text-xs ${
               currentLength > maxLength * 0.9
-                ? "text-amber-400"
+                ? "text-amber-500"
                 : "text-text-tertiary"
             }`}
             aria-live="polite"
@@ -64,11 +64,11 @@ export function Textarea({
             .join(" ") || undefined
         }
         required={required}
-        className={`w-full rounded-md border px-4 py-3 text-sm font-sans text-text-primary placeholder:text-text-tertiary bg-surface transition-colors duration-150 resize-y min-h-[100px]
-          focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1 focus:ring-offset-background
+        className={`w-full rounded-lg border px-4 py-3 text-sm font-sans text-text-primary placeholder:text-text-tertiary bg-background-alt transition-all duration-150 resize-y min-h-[100px]
+          focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand
           ${
             error
-              ? "border-red-400 focus:ring-red-400"
+              ? "border-red-400 focus:ring-red-400/30 focus:border-red-400"
               : "border-border hover:border-border-light"
           }
           ${className}`}
@@ -80,7 +80,7 @@ export function Textarea({
         </p>
       )}
       {error && (
-        <p id={errorId} role="alert" className="text-xs text-red-400">
+        <p id={errorId} role="alert" className="text-xs text-red-500">
           {error}
         </p>
       )}

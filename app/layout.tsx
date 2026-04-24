@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Syne } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 const dmSans = DM_Sans({
@@ -58,7 +57,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${syne.variable}`}>
       <body className="font-sans antialiased bg-background text-text-primary min-h-screen flex flex-col">
-        <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

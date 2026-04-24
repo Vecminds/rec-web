@@ -24,7 +24,7 @@ export function Select({
     <div className="flex flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="text-sm font-medium text-text-secondary"
+        className="text-sm font-medium text-text-primary"
       >
         {label}
         {required && (
@@ -38,32 +38,32 @@ export function Select({
         aria-invalid={!!error}
         aria-describedby={error ? errorId : undefined}
         required={required}
-        className={`w-full rounded-md border px-4 py-3 text-sm font-sans text-text-primary bg-surface transition-colors duration-150
-          focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1 focus:ring-offset-background
+        className={`w-full rounded-lg border px-4 py-3 text-sm font-sans text-text-primary bg-background-alt transition-all duration-150
+          focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand
           appearance-none cursor-pointer
           ${
             error
-              ? "border-red-400 focus:ring-red-400"
+              ? "border-red-400 focus:ring-red-400/30 focus:border-red-400"
               : "border-border hover:border-border-light"
           }
           ${className}`}
         {...props}
       >
-        <option value="" disabled className="text-text-tertiary bg-surface">
+        <option value="" disabled className="text-text-tertiary bg-white">
           {placeholder}
         </option>
         {options.map((opt) => (
           <option
             key={opt.value}
             value={opt.value}
-            className="bg-surface text-text-primary"
+            className="bg-white text-text-primary"
           >
             {opt.label}
           </option>
         ))}
       </select>
       {error && (
-        <p id={errorId} role="alert" className="text-xs text-red-400">
+        <p id={errorId} role="alert" className="text-xs text-red-500">
           {error}
         </p>
       )}

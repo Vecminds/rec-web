@@ -305,7 +305,7 @@ export function TalentForm() {
 
         {/* Work arrangement — multi-select checkboxes */}
         <div className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-text-secondary">
+          <span className="text-sm font-medium text-text-primary">
             Preferred work arrangement
             <span className="ml-1 text-accent" aria-hidden="true">*</span>
           </span>
@@ -332,7 +332,7 @@ export function TalentForm() {
                     aria-hidden="true"
                   >
                     {isChecked && (
-                      <svg className="w-3 h-3 text-background-darkest" fill="currentColor" viewBox="0 0 12 12">
+                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 12 12">
                         <path d="M10 3L5 8.5 2 5.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                       </svg>
                     )}
@@ -353,7 +353,7 @@ export function TalentForm() {
             })}
           </div>
           {errors.work_arrangement && (
-            <p role="alert" className="text-xs text-red-400 mt-1">
+            <p role="alert" className="text-xs text-red-500 mt-1">
               {errors.work_arrangement.message as string}
             </p>
           )}
@@ -374,7 +374,7 @@ export function TalentForm() {
 
         {/* Resume upload */}
         <div className="flex flex-col gap-2">
-          <label htmlFor="resume" className="text-sm font-medium text-text-secondary">
+          <label htmlFor="resume" className="text-sm font-medium text-text-primary">
             Resume / CV
             <span className="ml-1 text-text-tertiary text-xs">(optional — PDF only, max 5MB)</span>
           </label>
@@ -420,7 +420,7 @@ export function TalentForm() {
       {submitError && (
         <div
           role="alert"
-          className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-400"
+          className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-500"
         >
           {submitError}
         </div>

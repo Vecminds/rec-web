@@ -12,15 +12,15 @@ export function buttonVariants({
   className?: string;
 } = {}): string {
   const base =
-    "inline-flex items-center justify-center font-sans font-semibold rounded-md transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-sans font-semibold rounded-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variants = {
     primary:
-      "bg-accent text-background-darkest hover:bg-accent-hover shadow-sm hover:shadow-md",
+      "bg-brand text-white hover:bg-brand-light shadow-sm hover:shadow-md",
     secondary:
-      "border border-accent text-accent hover:bg-accent hover:text-background-darkest",
+      "border-2 border-brand text-brand hover:bg-brand hover:text-white",
     ghost:
-      "border border-border-light text-text-secondary hover:border-accent hover:text-text-primary",
+      "border border-border text-text-secondary hover:border-brand hover:text-brand",
   };
 
   const sizes = {

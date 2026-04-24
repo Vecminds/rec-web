@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/Button";
+import { Navbar } from "@/components/Navbar";
 
 // ─── Animation helpers ──────────────────────────────────────────────────────
 
@@ -97,18 +98,19 @@ const whyStats = [
 export default function HomePage() {
   return (
     <>
+      <Navbar />
       {/* ── 1. Hero ────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col justify-center dot-grid overflow-hidden">
-        {/* Primary glow */}
+        {/* Subtle brand glow */}
         <div
-          className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(242,174,28,0.07) 0%, transparent 65%)" }}
+          className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(16,39,112,0.04) 0%, transparent 65%)" }}
           aria-hidden="true"
         />
-        {/* Secondary glow — top right corner */}
+        {/* Gold accent glow */}
         <div
           className="absolute -top-20 right-0 w-[400px] h-[400px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(26,58,140,0.6) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(242,174,28,0.06) 0%, transparent 70%)" }}
           aria-hidden="true"
         />
 
@@ -116,7 +118,7 @@ export default function HomePage() {
           <motion.div initial="hidden" animate="visible" className="max-w-3xl">
             {/* Badge */}
             <motion.div variants={fadeUp} custom={0} className="mb-8">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold text-accent bg-accent/10 border border-accent/20 rounded-full px-4 py-2 uppercase tracking-widest">
+              <span className="inline-flex items-center gap-2 text-xs font-semibold text-brand bg-brand-lighter border border-brand/15 rounded-full px-4 py-2 uppercase tracking-widest">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" aria-hidden="true" />
                 Nepal &amp; South Asia
               </span>
@@ -130,7 +132,7 @@ export default function HomePage() {
             >
               Mid-to-senior engineers
               <br />
-              <span className="text-accent">from South Asia.</span>
+              <span className="text-brand">from South Asia.</span>
               <br />
               Ready to work with
               <br />
@@ -170,7 +172,7 @@ export default function HomePage() {
             <motion.div
               variants={fadeUp}
               custom={0.4}
-              className="flex flex-wrap gap-8 pt-8 border-t border-border/50"
+              className="flex flex-wrap gap-8 pt-8 border-t border-border"
             >
               {[
                 { value: "Mid–Senior", label: "Seniority focus" },
@@ -188,7 +190,7 @@ export default function HomePage() {
       </section>
 
       {/* ── 2. How it works ───────────────────────────────────────────── */}
-      <section className="bg-background-dark section-padding" aria-labelledby="how-it-works-heading">
+      <section className="bg-background-alt section-padding" aria-labelledby="how-it-works-heading">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial="hidden"
@@ -199,7 +201,7 @@ export default function HomePage() {
             <motion.p
               variants={fadeIn}
               custom={0}
-              className="text-xs font-semibold text-accent uppercase tracking-widest mb-3"
+              className="text-xs font-semibold text-brand uppercase tracking-widest mb-3"
             >
               Process
             </motion.p>
@@ -216,7 +218,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 relative">
             {/* Connector line on desktop */}
             <div
-              className="hidden md:block absolute top-10 left-[calc(33.33%+24px)] right-[calc(33.33%+24px)] h-px bg-border-light"
+              className="hidden md:block absolute top-10 left-[calc(33.33%+24px)] right-[calc(33.33%+24px)] h-px bg-border"
               aria-hidden="true"
             />
 
@@ -228,9 +230,9 @@ export default function HomePage() {
                 viewport={{ once: true, margin: "-60px" }}
                 variants={fadeUp}
                 custom={i * 0.1}
-                className="relative bg-surface border border-border rounded-xl p-8 hover:border-border-light transition-colors duration-300"
+                className="relative bg-white border border-border rounded-2xl p-8 hover:border-brand/20 hover:shadow-lg transition-all duration-300"
               >
-                <div className="text-4xl font-display font-bold text-accent/30 mb-4 select-none">
+                <div className="text-4xl font-display font-bold text-brand/15 mb-4 select-none">
                   {step.number}
                 </div>
                 <h3 className="font-display font-semibold text-xl text-text-primary mb-3">
@@ -257,7 +259,7 @@ export default function HomePage() {
             <motion.p
               variants={fadeIn}
               custom={0}
-              className="text-xs font-semibold text-accent uppercase tracking-widest mb-3"
+              className="text-xs font-semibold text-brand uppercase tracking-widest mb-3"
             >
               Specializations
             </motion.p>
@@ -280,14 +282,14 @@ export default function HomePage() {
                 viewport={{ once: true, margin: "-40px" }}
                 variants={fadeUp}
                 custom={i * 0.08}
-                className="group bg-surface border border-border rounded-xl p-6 hover:border-accent/30 hover:bg-surface-light transition-all duration-300 cursor-default"
+                className="group bg-white border border-border rounded-2xl p-6 hover:border-brand/20 hover:shadow-md transition-all duration-300 cursor-default"
               >
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-display font-semibold text-base text-text-primary group-hover:text-accent transition-colors duration-200">
+                  <h3 className="font-display font-semibold text-base text-text-primary group-hover:text-brand transition-colors duration-200">
                     {role.title}
                   </h3>
                   <div
-                    className="w-2 h-2 rounded-full bg-accent/30 group-hover:bg-accent transition-colors duration-200 mt-1 flex-shrink-0"
+                    className="w-2 h-2 rounded-full bg-brand/15 group-hover:bg-accent transition-colors duration-200 mt-1 flex-shrink-0"
                     aria-hidden="true"
                   />
                 </div>
@@ -308,11 +310,11 @@ export default function HomePage() {
             className="mt-10 text-sm text-text-tertiary text-center"
           >
             We focus on{" "}
-            <span className="text-text-secondary font-medium">
+            <span className="text-text-primary font-medium">
               mid-level (2–5 years)
             </span>{" "}
             and{" "}
-            <span className="text-text-secondary font-medium">
+            <span className="text-text-primary font-medium">
               senior/lead (5–8 years)
             </span>{" "}
             engineers.
@@ -322,7 +324,7 @@ export default function HomePage() {
 
       {/* ── 4. Why South Asia ─────────────────────────────────────────── */}
       <section
-        className="bg-background-dark section-padding"
+        className="bg-background-alt section-padding"
         aria-labelledby="why-south-asia-heading"
       >
         <div className="max-w-6xl mx-auto px-6">
@@ -335,7 +337,7 @@ export default function HomePage() {
             <motion.p
               variants={fadeIn}
               custom={0}
-              className="text-xs font-semibold text-accent uppercase tracking-widest mb-3"
+              className="text-xs font-semibold text-brand uppercase tracking-widest mb-3"
             >
               Context
             </motion.p>
@@ -360,8 +362,8 @@ export default function HomePage() {
                 custom={i * 0.1}
                 className="flex flex-col gap-4"
               >
-                <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                  <div className="w-3 h-3 rounded-full bg-accent" aria-hidden="true" />
+                <div className="w-10 h-10 rounded-xl bg-brand-lighter border border-brand/15 flex items-center justify-center flex-shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-brand" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="font-display font-semibold text-lg text-text-primary mb-2">
@@ -379,7 +381,7 @@ export default function HomePage() {
 
       {/* ── 5. For engineers (secondary CTA) ─────────────────────────── */}
       <section
-        className="bg-surface section-padding"
+        className="bg-white section-padding border-t border-border"
         aria-labelledby="for-engineers-heading"
       >
         <div className="max-w-6xl mx-auto px-6">
@@ -392,7 +394,7 @@ export default function HomePage() {
             <motion.p
               variants={fadeIn}
               custom={0}
-              className="text-xs font-semibold text-accent uppercase tracking-widest mb-4"
+              className="text-xs font-semibold text-brand uppercase tracking-widest mb-4"
             >
               For engineers
             </motion.p>
@@ -428,7 +430,7 @@ export default function HomePage() {
 
       {/* ── 6. Final CTA ──────────────────────────────────────────────── */}
       <section
-        className="relative section-padding dot-grid overflow-hidden"
+        className="relative bg-background-dark section-padding overflow-hidden"
         aria-labelledby="final-cta-heading"
       >
         {/* Glow */}
@@ -436,7 +438,7 @@ export default function HomePage() {
           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse, rgba(242,174,28,0.06) 0%, transparent 70%)",
+              "radial-gradient(ellipse, rgba(242,174,28,0.1) 0%, transparent 70%)",
           }}
           aria-hidden="true"
         />
@@ -451,21 +453,21 @@ export default function HomePage() {
               variants={fadeUp}
               custom={0}
               id="final-cta-heading"
-              className="font-display font-bold text-4xl md:text-5xl text-text-primary mb-5"
+              className="font-display font-bold text-4xl md:text-5xl text-white mb-5"
             >
               Ready to hire?
             </motion.h2>
             <motion.p
               variants={fadeUp}
               custom={0.1}
-              className="text-text-secondary text-lg mb-10 max-w-md mx-auto"
+              className="text-white/70 text-lg mb-10 max-w-md mx-auto"
             >
               Tell us what you&apos;re looking for. We&apos;ll come back with a plan.
             </motion.p>
             <motion.div variants={fadeUp} custom={0.2}>
               <Link
                 href="/companies"
-                className={buttonVariants({ variant: "primary", size: "lg" })}
+                className="inline-flex items-center justify-center font-sans font-semibold rounded-lg transition-all duration-200 bg-accent text-background-dark hover:bg-accent-hover shadow-sm hover:shadow-md px-8 py-4 text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background-dark"
               >
                 Get started
                 <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />

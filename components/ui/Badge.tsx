@@ -13,8 +13,8 @@ export function Badge({
 }: BadgeProps) {
   const variants = {
     role: "bg-surface border border-border text-text-secondary text-xs font-medium px-3 py-1.5 rounded-full",
-    stat: "bg-accent/10 border border-accent/20 text-accent text-xs font-semibold px-3 py-1.5 rounded-full",
-    tag: "bg-background-dark border border-border text-text-tertiary text-xs px-2.5 py-1 rounded",
+    stat: "bg-brand-lighter border border-brand/15 text-brand text-xs font-semibold px-3 py-1.5 rounded-full",
+    tag: "bg-background-alt border border-border text-text-tertiary text-xs px-2.5 py-1 rounded",
   };
 
   return (

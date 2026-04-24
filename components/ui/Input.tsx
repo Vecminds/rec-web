@@ -23,7 +23,7 @@ export function Input({
     <div className="flex flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="text-sm font-medium text-text-secondary"
+        className="text-sm font-medium text-text-primary"
       >
         {label}
         {required && (
@@ -41,11 +41,11 @@ export function Input({
             .join(" ") || undefined
         }
         required={required}
-        className={`w-full rounded-md border px-4 py-3 text-sm font-sans text-text-primary placeholder:text-text-tertiary bg-surface transition-colors duration-150
-          focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1 focus:ring-offset-background
+        className={`w-full rounded-lg border px-4 py-3 text-sm font-sans text-text-primary placeholder:text-text-tertiary bg-background-alt transition-all duration-150
+          focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand
           ${
             error
-              ? "border-red-400 focus:ring-red-400"
+              ? "border-red-400 focus:ring-red-400/30 focus:border-red-400"
               : "border-border hover:border-border-light"
           }
           ${className}`}
@@ -57,7 +57,7 @@ export function Input({
         </p>
       )}
       {error && (
-        <p id={errorId} role="alert" className="text-xs text-red-400">
+        <p id={errorId} role="alert" className="text-xs text-red-500">
           {error}
         </p>
       )}
