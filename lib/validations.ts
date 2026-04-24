@@ -87,7 +87,7 @@ export const talentFormSchema = z.object({
     .array(
       z.string().refine(
         (v) =>
-          ["Fully remote", "Contract / freelance", "Full-time employment"].includes(v),
+          ["Fully remote", "Contract", "Full-time employment", "Freelance"].includes(v),
         "Invalid work arrangement"
       )
     )
@@ -187,7 +187,7 @@ export const companyFormSchema = z.object({
     .min(1, "Please select an employment type")
     .refine(
       (v) =>
-        ["Full-time permanent", "Contract (fixed term)", "Contract-to-hire"].includes(v),
+        ["Full-time permanent", "Contract (fixed term)", "Contract-to-hire", "Freelance"].includes(v),
       "Please select a valid employment type"
     ),
 

@@ -36,8 +36,9 @@ const EMPLOYMENT_STATUS_OPTIONS = [
 
 const WORK_ARRANGEMENT_OPTIONS = [
   "Fully remote",
-  "Contract / freelance",
+  "Contract",
   "Full-time employment",
+  "Freelance",
 ] as const;
 
 const RELOCATION_OPTIONS = [
@@ -93,14 +94,12 @@ export function TalentForm() {
       setValue(
         "work_arrangement",
         selectedArrangements.filter((a) => a !== option),
-        { shouldValidate: true }
+        { shouldValidate: true },
       );
     } else {
-      setValue(
-        "work_arrangement",
-        [...selectedArrangements, option],
-        { shouldValidate: true }
-      );
+      setValue("work_arrangement", [...selectedArrangements, option], {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -135,7 +134,7 @@ export function TalentForm() {
         setSubmitError(
           "error" in json
             ? json.error
-            : "Something went wrong. Please try again."
+            : "Something went wrong. Please try again.",
         );
         return;
       }
@@ -143,7 +142,7 @@ export function TalentForm() {
       setSubmitted(true);
     } catch {
       setSubmitError(
-        "Could not submit your profile. Please check your connection and try again."
+        "Could not submit your profile. Please check your connection and try again.",
       );
     }
   };
@@ -307,7 +306,9 @@ export function TalentForm() {
         <div className="flex flex-col gap-2">
           <span className="text-sm font-medium text-text-primary">
             Preferred work arrangement
-            <span className="ml-1 text-accent" aria-hidden="true">*</span>
+            <span className="ml-1 text-accent" aria-hidden="true">
+              *
+            </span>
           </span>
           <div
             className="flex flex-col gap-3"
@@ -332,8 +333,19 @@ export function TalentForm() {
                     aria-hidden="true"
                   >
                     {isChecked && (
-                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 12 12">
-                        <path d="M10 3L5 8.5 2 5.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 12 12"
+                      >
+                        <path
+                          d="M10 3L5 8.5 2 5.5"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          fill="none"
+                        />
                       </svg>
                     )}
                   </div>
@@ -374,17 +386,22 @@ export function TalentForm() {
 
         {/* Resume upload */}
         <div className="flex flex-col gap-2">
-          <label htmlFor="resume" className="text-sm font-medium text-text-primary">
+          <label
+            htmlFor="resume"
+            className="text-sm font-medium text-text-primary"
+          >
             Resume / CV
-            <span className="ml-1 text-text-tertiary text-xs">(optional — PDF only, max 5MB)</span>
+            <span className="ml-1 text-text-tertiary text-xs">
+              (optional — PDF only, max 5MB)
+            </span>
           </label>
           <div
             className={`relative border-2 border-dashed rounded-xl px-6 py-8 text-center transition-colors duration-200 ${
               resumeFile
                 ? "border-accent/40 bg-accent/5"
                 : resumeError
-                ? "border-red-400/40 bg-red-400/5"
-                : "border-border hover:border-border-light"
+                  ? "border-red-400/40 bg-red-400/5"
+                  : "border-border hover:border-border-light"
             }`}
           >
             <input
@@ -397,13 +414,17 @@ export function TalentForm() {
             />
             <div className="pointer-events-none">
               {resumeFile ? (
-                <p className="text-sm text-accent font-medium">{resumeFile.name}</p>
+                <p className="text-sm text-accent font-medium">
+                  {resumeFile.name}
+                </p>
               ) : (
                 <>
                   <p className="text-sm text-text-secondary">
                     Drop your PDF here or click to browse
                   </p>
-                  <p className="text-xs text-text-tertiary mt-1">PDF • max 5MB</p>
+                  <p className="text-xs text-text-tertiary mt-1">
+                    PDF • max 5MB
+                  </p>
                 </>
               )}
             </div>

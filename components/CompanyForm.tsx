@@ -47,6 +47,7 @@ const EMPLOYMENT_TYPE_OPTIONS = [
   { value: "Full-time permanent", label: "Full-time permanent" },
   { value: "Contract (fixed term)", label: "Contract (fixed term)" },
   { value: "Contract-to-hire", label: "Contract-to-hire" },
+  { value: "Freelance", label: "Freelance" },
 ];
 
 const WORK_ARRANGEMENT_OPTIONS = [
