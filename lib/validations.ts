@@ -11,11 +11,13 @@ export const talentFormSchema = z.object({
   email: z
     .string()
     .min(1, "Email is required")
+    .max(255, "Email must be under 255 characters")
     .email("Please enter a valid email address"),
 
   linkedin_url: z
     .string()
     .min(1, "LinkedIn URL is required")
+    .max(255, "LinkedIn URL must be under 255 characters")
     .url("Please enter a valid URL")
     .refine(
       (url) => url.includes("linkedin.com"),
@@ -24,6 +26,7 @@ export const talentFormSchema = z.object({
 
   github_url: z
     .string()
+    .max(255, "GitHub URL must be under 255 characters")
     .url("Please enter a valid URL")
     .optional()
     .or(z.literal("")),
@@ -123,6 +126,7 @@ export const companyFormSchema = z.object({
   company_website: z
     .string()
     .min(1, "Company website is required")
+    .max(255, "Company website must be under 255 characters")
     .url("Please enter a valid URL"),
 
   contact_name: z
@@ -138,6 +142,7 @@ export const companyFormSchema = z.object({
   contact_email: z
     .string()
     .min(1, "Work email is required")
+    .max(255, "Work email must be under 255 characters")
     .email("Please enter a valid email address"),
 
   country: z
@@ -230,7 +235,7 @@ export const companyFormSchema = z.object({
     .optional()
     .or(z.literal("")),
 
-  target_start_date: z.string().optional().or(z.literal("")),
+  target_start_date: z.string().max(100, "Date must be under 100 characters").optional().or(z.literal("")),
 
   role_description: z
     .string()
