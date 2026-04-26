@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+const isSafeUrl = (url: string) => {
+  try {
+    const u = new URL(url);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
+
 // ─── Talent Form Schema ────────────────────────────────────────────────────
 
 export const talentFormSchema = z.object({
@@ -19,6 +28,7 @@ export const talentFormSchema = z.object({
     .min(1, "LinkedIn URL is required")
     .max(255, "LinkedIn URL must be under 255 characters")
     .url("Please enter a valid URL")
+    .refine(isSafeUrl, "Please enter a valid HTTP or HTTPS URL")
     .refine(
       (url) => url.includes("linkedin.com"),
       "Please enter a valid LinkedIn URL"
@@ -28,6 +38,7 @@ export const talentFormSchema = z.object({
     .string()
     .max(255, "GitHub URL must be under 255 characters")
     .url("Please enter a valid URL")
+    .refine(isSafeUrl, "Please enter a valid HTTP or HTTPS URL")
     .optional()
     .or(z.literal("")),
 
@@ -104,7 +115,8 @@ export const talentFormSchema = z.object({
         "Invalid work arrangement"
       )
     )
-    .min(1, "Please select at least one work arrangement"),
+    .min(1, "Please select at least one work arrangement")
+    .max(10, "Too many work arrangements selected"),
 
   bio: z
     .string()
@@ -127,7 +139,8 @@ export const companyFormSchema = z.object({
     .string()
     .min(1, "Company website is required")
     .max(255, "Company website must be under 255 characters")
-    .url("Please enter a valid URL"),
+    .url("Please enter a valid URL")
+    .refine(isSafeUrl, "Please enter a valid HTTP or HTTPS URL"),
 
   contact_name: z
     .string()
