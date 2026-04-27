@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
   ArrowRight,
@@ -30,7 +30,7 @@ import { Footer } from "@/components/Footer";
 
 // ─── Animation Variants ──────────────────────────────────────────────────────
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: (i: number) => ({
     opacity: 1,
@@ -38,7 +38,7 @@ const fadeUp = {
     transition: {
       delay: i * 0.1,
       duration: 0.6,
-      ease: [0.215, 0.61, 0.355, 1],
+      ease: [0.215, 0.61, 0.355, 1] as const,
     },
   }),
 };
