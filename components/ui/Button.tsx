@@ -7,26 +7,30 @@ export function buttonVariants({
   size = "md",
   className = "",
 }: {
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "gold" | "white" | "white-outline";
   size?: "sm" | "md" | "lg";
   className?: string;
 } = {}): string {
   const base =
-    "inline-flex items-center justify-center font-sans font-semibold rounded-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-sans font-medium rounded transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed tracking-tight";
 
   const variants = {
     primary:
-      "bg-brand text-white hover:bg-brand-light shadow-sm hover:shadow-md",
+      "bg-navy text-white hover:bg-navy-mid",
     secondary:
-      "border-2 border-brand text-brand hover:bg-brand hover:text-white",
-    ghost:
-      "border border-border text-text-secondary hover:border-brand hover:text-brand",
+      "bg-transparent border-[1.5px] border-gold text-gold hover:bg-gold/5",
+    gold:
+      "bg-gold text-navy hover:opacity-90",
+    white:
+      "bg-white text-blue hover:opacity-90",
+    "white-outline":
+      "bg-transparent border-[1.5px] border-white/40 text-white hover:border-white/80",
   };
 
   const sizes = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base",
-    lg: "px-8 py-4 text-lg",
+    sm: "px-4 py-2 text-[13px]",
+    md: "px-6 py-3 text-[14px]",
+    lg: "px-9 py-4 text-[15px]",
   };
 
   return `${base} ${variants[variant]} ${sizes[size]} ${className}`;
@@ -35,7 +39,7 @@ export function buttonVariants({
 // ─── Button component ───────────────────────────────────────────────────────
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "gold" | "white" | "white-outline";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   children: React.ReactNode;

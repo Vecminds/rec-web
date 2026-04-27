@@ -3,7 +3,14 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2 } from "lucide-react";
+import {
+  CheckCircle2,
+  User,
+  Briefcase,
+  Check,
+  FileText,
+  UploadCloud,
+} from "lucide-react";
 import { talentFormSchema, type TalentFormValues } from "@/lib/validations";
 import { getCountryByCode } from "@/lib/countries";
 import { Button } from "@/components/ui/Button";
@@ -50,7 +57,7 @@ const RELOCATION_OPTIONS = [
   { value: "already_remote", label: "I'm already working remotely" },
 ];
 
-export function TalentForm() {
+export function TalentForm({ onSubscribed }: { onSubscribed?: () => void }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
@@ -77,7 +84,9 @@ export function TalentForm() {
   const selectedCountry = watch("country") ?? "";
   const phoneValue = watch("phone") ?? "";
 
-  const countryData = selectedCountry ? getCountryByCode(selectedCountry) : undefined;
+  const countryData = selectedCountry
+    ? getCountryByCode(selectedCountry)
+    : undefined;
 
   // When country changes, trigger validation for the country field
   useEffect(() => {
@@ -161,6 +170,7 @@ export function TalentForm() {
       }
 
       setSubmitted(true);
+      onSubscribed?.();
     } catch {
       setSubmitError(
         "Could not submit your profile. Please check your connection and try again.",
@@ -168,17 +178,17 @@ export function TalentForm() {
     }
   };
 
-  if (submitted) {
+  if (submitted && !onSubscribed) {
     return (
       <div className="flex flex-col items-start gap-6 py-12">
         <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center">
           <CheckCircle2 className="w-6 h-6 text-accent" aria-hidden="true" />
         </div>
         <div>
-          <h2 className="font-display font-bold text-2xl text-text-primary mb-3">
+          <h2 className="font-serif font-bold text-2xl text-text-primary mb-3">
             Profile received
           </h2>
-          <p className="text-text-secondary leading-relaxed max-w-md">
+          <p className="text-text-secondary leading-relaxed max-w-md font-light">
             Thanks — we&apos;ve received your profile. If there&apos;s a match
             with a current or upcoming role, we&apos;ll reach out directly to
             your email. We review all profiles within 3 business days.
@@ -192,14 +202,17 @@ export function TalentForm() {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="flex flex-col gap-8"
+      className="flex flex-col gap-10"
       aria-label="Talent registration form"
     >
       {/* ── Personal info ──────────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-6">
-        <legend className="font-display font-semibold text-lg text-text-primary mb-2">
-          Personal information
-        </legend>
+        <div className="flex items-center gap-2 pb-3 border-b border-border mb-2">
+          <User className="w-4 h-4 text-text-tertiary" />
+          <legend className="text-[13px] font-semibold text-brand uppercase tracking-wider">
+            Personal information
+          </legend>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Input
@@ -250,7 +263,9 @@ export function TalentForm() {
             label="Country"
             required
             value={selectedCountry}
-            onChange={(code) => setValue("country", code, { shouldValidate: true })}
+            onChange={(code) =>
+              setValue("country", code, { shouldValidate: true })
+            }
             error={errors.country?.message}
           />
           <PhoneInput
@@ -289,9 +304,12 @@ export function TalentForm() {
 
       {/* ── Professional info ──────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-6">
-        <legend className="font-display font-semibold text-lg text-text-primary mb-2">
-          Professional information
-        </legend>
+        <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
+          <Briefcase className="w-[14px] h-[14px] text-text-secondary" />
+          <legend className="text-[13px] font-medium text-navy uppercase tracking-[0.06em]">
+            Professional information
+          </legend>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Select
@@ -368,28 +386,18 @@ export function TalentForm() {
                   className="flex items-center gap-3 cursor-pointer group"
                 >
                   <div
-                    className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors duration-150 ${
+                    className={`w-4 h-4 rounded-[3px] border-[1.5px] flex items-center justify-center flex-shrink-0 transition-colors duration-150 ${
                       isChecked
-                        ? "bg-accent border-accent"
-                        : "border-border group-hover:border-border-light bg-surface"
+                        ? "bg-navy border-navy"
+                        : "border-border group-hover:border-border-light bg-white"
                     }`}
                     aria-hidden="true"
                   >
                     {isChecked && (
-                      <svg
-                        className="w-3 h-3 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 12 12"
-                      >
-                        <path
-                          d="M10 3L5 8.5 2 5.5"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          fill="none"
-                        />
-                      </svg>
+                      <Check
+                        className="w-[10px] h-[10px] text-white"
+                        strokeWidth={3}
+                      />
                     )}
                   </div>
                   <input
@@ -429,25 +437,20 @@ export function TalentForm() {
 
         {/* Resume upload */}
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="resume"
-            className="text-sm font-medium text-text-primary"
-          >
-            Resume / CV
-            <span className="ml-1 text-accent" aria-hidden="true">
-              *
+          <div className="flex items-center gap-2 pb-3 border-b border-border mb-2 mt-4">
+            <FileText className="w-4 h-4 text-text-tertiary" />
+            <span className="text-[13px] font-semibold text-brand uppercase tracking-wider">
+              Resume / CV
             </span>
-            <span className="ml-1 text-text-tertiary text-xs">
-              (PDF only, max 5MB)
-            </span>
-          </label>
+          </div>
+
           <div
-            className={`relative border-2 border-dashed rounded-xl px-6 py-8 text-center transition-colors duration-200 ${
+            className={`relative border-[1.5px] border-dashed rounded-lg p-8 text-center transition-colors duration-200 cursor-pointer ${
               resumeFile
-                ? "border-accent/40 bg-accent/5"
+                ? "border-[#16a34a] border-solid bg-[#f0fdf4]"
                 : resumeError
-                  ? "border-red-400/40 bg-red-400/5"
-                  : "border-border hover:border-border-light"
+                  ? "border-red-400 bg-red-400/5"
+                  : "border-border hover:border-gold hover:bg-gold/5 bg-white"
             }`}
           >
             <input
@@ -455,28 +458,36 @@ export function TalentForm() {
               type="file"
               accept="application/pdf"
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              title="Upload resume"
+              placeholder="Upload resume"
               onChange={handleFileChange}
               aria-describedby={resumeError ? "resume-error" : undefined}
             />
-            <div className="pointer-events-none">
+            <div className="pointer-events-none flex flex-col items-center">
+              <div className="w-10 h-10 rounded-full bg-cream-dark flex items-center justify-center mb-3">
+                <UploadCloud
+                  className="w-[18px] h-[18px] text-text-secondary"
+                  strokeWidth={1.75}
+                />
+              </div>
               {resumeFile ? (
-                <p className="text-sm text-accent font-medium">
-                  {resumeFile.name}
+                <p className="text-sm text-green-600 font-medium">
+                  ✓ {resumeFile.name}
                 </p>
               ) : (
                 <>
-                  <p className="text-sm text-text-secondary">
-                    Drop your PDF here or click to browse
+                  <p className="text-sm text-text-primary">
+                    <strong>Drop your PDF here</strong> or click to browse
                   </p>
                   <p className="text-xs text-text-tertiary mt-1">
-                    PDF • max 5MB
+                    PDF only · max 5MB
                   </p>
                 </>
               )}
             </div>
           </div>
           {resumeError && (
-            <p id="resume-error" role="alert" className="text-xs text-red-400">
+            <p id="resume-error" role="alert" className="text-xs text-red-500">
               {resumeError}
             </p>
           )}
@@ -494,15 +505,20 @@ export function TalentForm() {
       )}
 
       {/* ── Submit button ──────────────────────────────────────────────── */}
-      <Button
-        type="submit"
-        variant="primary"
-        size="lg"
-        loading={isSubmitting}
-        className="w-full sm:w-auto"
-      >
-        Submit your profile →
-      </Button>
+      <div className="pt-8 border-t border-border">
+        <Button
+          type="submit"
+          variant="gold"
+          loading={isSubmitting}
+          className="w-full p-4 text-[16px]"
+        >
+          Submit your profile →
+        </Button>
+        <p className="mt-3 text-[12px] text-text-tertiary text-center font-light">
+          We never share your profile without asking first. No spam. No generic
+          job alerts.
+        </p>
+      </div>
     </form>
   );
 }

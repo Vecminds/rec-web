@@ -2,7 +2,10 @@
 
 import React from "react";
 
-interface PhoneInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> {
+interface PhoneInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "value"
+> {
   id: string;
   label: string;
   /** The dial code prefix (e.g. "+977") — shown as a read-only badge */
@@ -46,7 +49,7 @@ export function PhoneInput({
       <div className="flex">
         {/* Dial code badge */}
         <span
-          className={`inline-flex items-center gap-1.5 rounded-l-lg border border-r-0 px-3 py-3 text-sm font-medium select-none flex-shrink-0 bg-gray-50
+          className={`flex items-center gap-[6px] rounded-l border border-r-0 px-[12px] py-[10px] text-[13px] font-sans select-none flex-shrink-0 bg-[#eef2ff]
             ${error ? "border-red-400 text-red-500" : "border-border text-text-secondary"}`}
           aria-hidden="true"
         >
@@ -73,14 +76,13 @@ export function PhoneInput({
               .join(" ") || undefined
           }
           required={required}
-          className={`w-full rounded-r-lg border px-4 py-3 text-sm font-sans text-text-primary placeholder:text-text-tertiary bg-background-alt transition-all duration-150
-            focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand
+          className={`w-full rounded-r border px-[14px] py-[10px] text-[14px] font-sans text-text-primary placeholder:text-text-tertiary bg-white transition-all duration-150
+            focus:outline-none focus:ring-0 focus:border-blue shadow-[0_0_0_0_transparent] focus:shadow-[0_0_0_3px_rgba(41,82,204,0.08)]
             ${
               error
-                ? "border-red-400 focus:ring-red-400/30 focus:border-red-400"
+                ? "border-red-400 focus:shadow-[0_0_0_3px_rgba(248,113,113,0.15)] focus:border-red-400"
                 : "border-border hover:border-border-light"
-            }
-            ${className}`}
+            } ${className}`}
           {...props}
         />
       </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Building2, Briefcase } from "lucide-react";
 import { companyFormSchema, type CompanyFormValues } from "@/lib/validations";
 import { getCountryByCode } from "@/lib/countries";
 import { Button } from "@/components/ui/Button";
@@ -61,7 +61,7 @@ const WORK_ARRANGEMENT_OPTIONS = [
   },
 ];
 
-export function CompanyForm() {
+export function CompanyForm({ onSubscribed }: { onSubscribed?: () => void }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -115,6 +115,7 @@ export function CompanyForm() {
       }
 
       setSubmitted(true);
+      onSubscribed?.();
     } catch {
       setSubmitError(
         "Could not submit your request. Please check your connection and try again.",
@@ -122,17 +123,17 @@ export function CompanyForm() {
     }
   };
 
-  if (submitted) {
+  if (submitted && !onSubscribed) {
     return (
       <div className="flex flex-col items-start gap-6 py-12">
         <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center">
           <CheckCircle2 className="w-6 h-6 text-accent" aria-hidden="true" />
         </div>
         <div>
-          <h2 className="font-display font-bold text-2xl text-text-primary mb-3">
+          <h2 className="font-serif font-bold text-2xl text-text-primary mb-3">
             Request received
           </h2>
-          <p className="text-text-secondary leading-relaxed max-w-md">
+          <p className="text-text-secondary leading-relaxed max-w-md font-light">
             We&apos;ve received your request. We&apos;ll review it and follow up
             at your email within 1–2 business days to confirm scope and next
             steps.
@@ -146,14 +147,17 @@ export function CompanyForm() {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="flex flex-col gap-8"
+      className="flex flex-col gap-10"
       aria-label="Company hiring request form"
     >
       {/* ── Company info ───────────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-6">
-        <legend className="font-display font-semibold text-lg text-text-primary mb-2">
-          Company information
-        </legend>
+        <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
+           <Building2 className="w-[14px] h-[14px] text-text-secondary" />
+           <legend className="text-[13px] font-medium text-navy uppercase tracking-[0.06em]">
+            Company information
+          </legend>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Input
@@ -255,9 +259,12 @@ export function CompanyForm() {
 
       {/* ── Role details ───────────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-6">
-        <legend className="font-display font-semibold text-lg text-text-primary mb-2">
-          Role details
-        </legend>
+        <div className="flex items-center gap-2 pb-3 border-b border-border mb-2">
+           <Briefcase className="w-4 h-4 text-text-tertiary" />
+           <legend className="text-[13px] font-semibold text-brand uppercase tracking-wider">
+            Role details
+          </legend>
+        </div>
 
         <Input
           id="role_title"
@@ -335,7 +342,7 @@ export function CompanyForm() {
             id="salary_budget"
             label="Salary / compensation budget"
             type="text"
-            placeholder="e.g. $70,000–$90,000/year USD or $4,000–$6,000/month"
+            placeholder="e.g. $70,000–$90,000/year USD"
             error={errors.salary_budget?.message}
             helpText="Optional"
             {...register("salary_budget")}
@@ -375,15 +382,19 @@ export function CompanyForm() {
       )}
 
       {/* ── Submit button ──────────────────────────────────────────────── */}
-      <Button
-        type="submit"
-        variant="primary"
-        size="lg"
-        loading={isSubmitting}
-        className="w-full sm:w-auto"
-      >
-        Submit hiring request →
-      </Button>
+      <div className="pt-8 border-t border-border">
+        <Button
+          type="submit"
+          variant="primary"
+          loading={isSubmitting}
+          className="w-full p-4 text-[16px]"
+        >
+          Submit hiring request →
+        </Button>
+        <p className="mt-3 text-[12px] text-text-tertiary text-center font-light">
+          No spam. No fee unless you hire. We'll reply within one business day.
+        </p>
+      </div>
     </form>
   );
 }

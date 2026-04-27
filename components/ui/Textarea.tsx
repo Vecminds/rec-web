@@ -64,14 +64,13 @@ export function Textarea({
             .join(" ") || undefined
         }
         required={required}
-        className={`w-full rounded-lg border px-4 py-3 text-sm font-sans text-text-primary placeholder:text-text-tertiary bg-background-alt transition-all duration-150 resize-y min-h-[100px]
-          focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand
+        className={`w-full rounded border px-[14px] py-[10px] text-[14px] font-sans text-text-primary placeholder:text-text-tertiary bg-white transition-all duration-150 resize-y min-h-[100px]
+          focus:outline-none focus:ring-0 focus:border-blue shadow-[0_0_0_0_transparent] focus:shadow-[0_0_0_3px_rgba(41,82,204,0.08)]
           ${
             error
-              ? "border-red-400 focus:ring-red-400/30 focus:border-red-400"
+              ? "border-red-400 focus:shadow-[0_0_0_3px_rgba(248,113,113,0.15)] focus:border-red-400"
               : "border-border hover:border-border-light"
-          }
-          ${className}`}
+          } ${className}`}
         {...props}
       />
       {helpText && !error && (

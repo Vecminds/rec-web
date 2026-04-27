@@ -9,60 +9,71 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        /* ── Backgrounds ──────────────────────────────────────────────── */
-        background: "#FFFFFF",
-        "background-alt": "#F8F9FB",
-        "background-dark": "#102770",       /* brand navy — used sparingly */
-        "background-darkest": "#0C1D54",
+        /* ── Base Colors ──────────────────────────────────────────────── */
+        white: "#ffffff",
+        navy: "#1e3a8a",
+        "navy-mid": "#1e40af",
+        blue: "#2952cc",
+        "blue-light": "#3b82f6",
+        gold: "#d97706",
+        "gold-light": "#f59e0b",
+        cream: "#f8f9ff",
+        "cream-dark": "#eef2ff",
 
-        /* ── Surfaces ─────────────────────────────────────────────────── */
-        surface: "#F2F4F7",
-        "surface-light": "#E8ECF1",
-        "surface-elevated": "#FFFFFF",
-
-        /* ── Borders ──────────────────────────────────────────────────── */
-        border: "#E2E6ED",
-        "border-light": "#D0D5DE",
-
-        /* ── Brand accent (navy blue) ─────────────────────────────────── */
+        /* ── Semantic Mappings ────────────────────────────────────────── */
+        background: {
+          DEFAULT: "#f8f9ff",
+          white: "#ffffff",
+          dark: "#1e3a8a",
+        },
         brand: {
-          DEFAULT: "#102770",
-          light: "#1A3A8C",
-          lighter: "#EBF0FF",
-          muted: "#10277015",
+          DEFAULT: "#1e3a8a",
+          mid: "#1e40af",
+          light: "#3b82f6",
+          blue: "#2952cc",
         },
-
-        /* ── Accent (gold) ────────────────────────────────────────────── */
         accent: {
-          DEFAULT: "#F2AE1C",
-          hover: "#D99A10",
-          light: "#FFF8E8",
-          muted: "#F2AE1C20",
+          DEFAULT: "#d97706",
+          hover: "#f59e0b",
+          light: "#fef3c7",
+          muted: "#d9770615",
         },
-
-        /* ── Text ─────────────────────────────────────────────────────── */
         text: {
-          primary: "#1A1D26",
-          secondary: "#4A5568",
-          tertiary: "#8896AB",
+          primary: "#0b1f3a",
+          secondary: "#5a6a82",
+          tertiary: "#8fa0b8",
         },
+        border: {
+          DEFAULT: "rgba(11, 31, 58, 0.12)",
+          light: "rgba(11, 31, 58, 0.07)",
+        },
+        success: "#166534",
       },
       fontFamily: {
         sans: ["var(--font-dm-sans)", "sans-serif"],
-        display: ["var(--font-syne)", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+      },
+      borderRadius: {
+        DEFAULT: "4px",
+        lg: "8px",
+        xl: "12px",
+        "2xl": "14px",
+      },
+      boxShadow: {
+        card: "0 8px 48px rgba(30, 58, 138, 0.1)",
       },
       animation: {
-        "fade-in": "fadeIn 0.6s ease-out forwards",
-        "fade-up": "fadeUp 0.6s ease-out forwards",
+        "fade-up": "fadeUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards",
+        "slide-in": "slideIn 0.45s ease-out forwards",
       },
       keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
         fadeUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        slideIn: {
+          "0%": { opacity: "0", transform: "translateX(14px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
         },
       },
     },
