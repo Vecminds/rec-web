@@ -344,7 +344,7 @@ export default function HomePage() {
       </section>
 
       {/* ── PROOF STRIP ── */}
-      <section className="bg-brand py-12 px-6 md:px-16">
+      {/* <section className="bg-brand py-12 px-6 md:px-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 items-start">
           <motion.div
             initial="hidden"
@@ -432,10 +432,10 @@ export default function HomePage() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* ── PROBLEM SECTION ── */}
-      <section className="py-24 px-6 md:px-16">
+      <section id="aboutus" className="py-24 px-6 md:px-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <motion.div
             initial="hidden"
@@ -485,7 +485,7 @@ export default function HomePage() {
       </section>
 
       {/* ── PROCESS SECTION ── */}
-      <section className="py-24 px-6 md:px-16 bg-white">
+      <section id="process" className="py-24 px-6 md:px-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -559,7 +559,7 @@ export default function HomePage() {
       </section>
 
       {/* ── ROLES SECTION ── */}
-      <section className="py-24 px-6 md:px-16">
+      <section id="roles" className="py-24 px-6 md:px-16">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -694,7 +694,7 @@ export default function HomePage() {
       </section>
 
       {/* ── CONTEXT SECTION ── */}
-      <section className="py-24 px-6 md:px-16 bg-white">
+      <section id="aboutus" className="py-24 px-6 md:px-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -748,7 +748,9 @@ export default function HomePage() {
                 <h3 className="text-[16px] font-semibold text-brand mb-3">
                   {card.title}
                 </h3>
-                <p className="text-[14px] text-text-secondary leading-relaxed font-light">{card.desc}</p>
+                <p className="text-[14px] text-text-secondary leading-relaxed font-light">
+                  {card.desc}
+                </p>
               </div>
             ))}
           </div>

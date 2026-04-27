@@ -102,9 +102,9 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-2.5">
               {[
-                { href: "#", label: "How it works" },
-                { href: "#", label: "Roles we fill" },
-                { href: "#", label: "Why South Asia" },
+                { href: "#process", label: "How it works" },
+                { href: "#roles", label: "Roles we fill" },
+                { href: "#aboutus", label: "Why South Asia" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link
