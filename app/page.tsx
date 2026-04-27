@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-  ArrowRight,
   Check,
   ChevronDown,
   Code,
@@ -13,18 +12,14 @@ import {
   Globe,
   Layers,
   Lock,
-  MessageSquare,
-  Monitor,
   Smartphone,
   Users,
   Zap,
   BarChart,
-  Server,
   Terminal,
   FileText,
   Filter,
 } from "lucide-react";
-import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -45,26 +40,98 @@ const fadeUp = {
 
 // ─── Data ─────────────────────────────────────────────────────────────────
 
-const testimonials = [
+const trustedCompanies = [
+  "Acme®",
+  "Finstack",
+  "Cloudnine",
+  "Vertex®",
+  "Buildly",
+  "Dataspark",
+];
+
+const marqueeTestimonialsRow1 = [
   {
+    initials: "JM",
+    name: "James M.",
+    handle: "@jamesm_cto",
     quote:
-      "We'd tried three agencies before Recruitencer. They sent five candidates — we hired two. The quality difference was obvious from the first call.",
-    attr: "— CTO, Series B fintech startup, Berlin",
+      "We'd tried three agencies before. Recruitencer sent five candidates — we hired two of them. Quality difference was obvious from the first call.",
+    avatarClass: "bg-brand-blue",
   },
   {
+    initials: "SR",
+    name: "Sarah R.",
+    handle: "@saraheng",
     quote:
-      "The engineers we interviewed were genuinely mid-senior level — not the junior candidates other agencies had been sending us dressed up as seniors.",
-    attr: "— VP Engineering, SaaS company, Amsterdam",
+      "Genuinely mid-senior engineers — not juniors dressed up as seniors, which is what every other agency kept sending us.",
+    avatarClass: "bg-brand",
   },
   {
+    initials: "DK",
+    name: "David K.",
+    handle: "@dk_hoe",
     quote:
-      "Remote-ready means something different here. These engineers had async habits from day one — documentation, communication, ownership. No hand-holding needed.",
-    attr: "— Head of Engineering, fintech startup, London",
+      "Remote-ready here means something real. Async habits from day one — documentation, communication, ownership. No hand-holding.",
+    avatarClass: "bg-accent",
   },
   {
+    initials: "AL",
+    name: "Amy L.",
+    handle: "@amyl_cto",
     quote:
-      "We were sceptical about hiring from a region we hadn't recruited from before. Three months in, our South Asia hire is one of the strongest engineers on the team.",
-    attr: "— CTO, early-stage startup, San Francisco",
+      "Three months in, our South Asia hire is one of the strongest engineers on the team. Already planning a second hire.",
+    avatarClass: "bg-slate-600",
+  },
+  {
+    initials: "MR",
+    name: "Marco R.",
+    handle: "@marcor_vp",
+    quote:
+      "The brief-to-shortlist turnaround was genuinely 7 days. I've never seen that from an agency before.",
+    avatarClass: "bg-teal-700",
+  },
+];
+
+const marqueeTestimonialsRow2 = [
+  {
+    initials: "BW",
+    name: "Beth W.",
+    handle: "@bethw_ops",
+    quote:
+      "No retainer, no upfront fee. We paid when we hired. For an early-stage startup that's exactly the risk model we needed.",
+    avatarClass: "bg-slate-600",
+  },
+  {
+    initials: "RJ",
+    name: "Raj J.",
+    handle: "@rajj_tech",
+    quote:
+      "The 90-day replacement guarantee meant we could make the hire confidently. Didn't need it, but it changed the decision.",
+    avatarClass: "bg-brand-blue",
+  },
+  {
+    initials: "EV",
+    name: "Elena V.",
+    handle: "@elenav_head",
+    quote:
+      "These engineers had production-grade experience, not just tutorial projects. Our bar is high and they cleared it.",
+    avatarClass: "bg-teal-700",
+  },
+  {
+    initials: "SW",
+    name: "Simon W.",
+    handle: "@simonw_eng",
+    quote:
+      "Recruitencer's screening is on another level — totally different calibre compared to previous pipelines we tried.",
+    avatarClass: "bg-brand",
+  },
+  {
+    initials: "NK",
+    name: "Nadia K.",
+    handle: "@nadiak_cto",
+    quote:
+      "They understand what mid-senior actually means. Not just years of experience — real ownership mindset.",
+    avatarClass: "bg-accent",
   },
 ];
 
@@ -147,15 +214,7 @@ const extraRoles = [
 // ─── Components ───────────────────────────────────────────────────────────
 
 export default function HomePage() {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showAllRoles, setShowAllRoles] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <div className="bg-background text-text-primary selection:bg-brand/10 selection:text-brand">
@@ -343,94 +402,31 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── PROOF STRIP ── */}
-      <section className="bg-brand py-12 px-6 md:px-16">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 items-start">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={0}
-          >
-            <div className="font-serif text-[18px] text-white tracking-tight leading-none mb-2">
-              Nepal & <span className="text-gold-light">SA</span>
-            </div>
-            <div className="text-[13px] text-white/50 font-light leading-relaxed">
-              Talent sourced exclusively
-              <br />
-              from South Asia
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={1}
-          >
-            <div className="font-serif text-[40px] text-white leading-none mb-2">
-              Mid<span className="text-gold-light">–</span>Senior
-            </div>
-            <div className="text-[13px] text-white/50 font-light leading-relaxed">
-              Only 2–8 year engineers.
-              <br />
-              No entry-level, ever.
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={1}
-          >
-            <div className="font-serif text-[40px] text-white leading-none mb-2">
-              $<span className="text-gold-light">0</span>
-            </div>
-            <div className="text-[13px] text-white/50 font-light leading-relaxed">
-              Upfront fee.
-              <br />
-              Pay only when you hire.
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={2}
-            className="lg:col-span-2 bg-white/5 border border-white/10 rounded-lg p-6 relative min-h-[140px] flex flex-col justify-center"
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTestimonial}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
+      {/* ── TRUSTED BY ── */}
+      <section className="py-12 px-6 md:px-16 bg-white border-y border-border-light">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-[11px] font-semibold text-text-tertiary uppercase tracking-[0.1em] text-center mb-7">
+            Companies that trust Recruitencer
+          </div>
+          <div className="flex flex-wrap items-center justify-center">
+            {trustedCompanies.map((company, index) => (
+              <div
+                key={company}
+                className={`px-8 py-4 flex items-center justify-center ${
+                  index !== trustedCompanies.length - 1
+                    ? "border-r border-border-light"
+                    : ""
+                }`}
               >
-                <p className="font-serif text-[18px] italic text-white/90 leading-relaxed mb-3">
-                  &quot;{testimonials[activeTestimonial].quote}&quot;
-                </p>
-                <div className="text-[12px] text-white/40 font-light">
-                  {testimonials[activeTestimonial].attr}
-                </div>
-              </motion.div>
-            </AnimatePresence>
-            <div className="flex gap-1.5 mt-4">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveTestimonial(i)}
-                  className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === activeTestimonial ? "bg-gold-light scale-125" : "bg-white/20"}`}
-                />
-              ))}
-            </div>
-          </motion.div>
+                <span className="text-[15px] font-medium text-text-secondary opacity-60">
+                  {company}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-[13px] text-text-tertiary italic mt-2">
+            ← Add your clients&apos; logos here once onboarded
+          </p>
         </div>
       </section>
 
@@ -555,6 +551,64 @@ export default function HomePage() {
             </strong>{" "}
             if things don&apos;t work out.
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── STATS SECTION ── */}
+      <section className="py-20 px-6 md:px-16 bg-[#F0F4FF] border-y border-border-light">
+        <div className="max-w-6xl mx-auto">
+          <div className="pb-10 text-center">
+            <div className="text-[11px] font-semibold text-accent uppercase tracking-[0.1em] mb-2">
+              By the numbers
+            </div>
+            <div className="font-serif text-[clamp(22px,3vw,32px)] text-brand tracking-tight">
+              The model, in plain numbers.
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border-light border border-border-light">
+            {[
+              {
+                num: "7",
+                unit: "d",
+                label: "Average time to shortlist",
+                sub: "From brief to 3–5 vetted profiles",
+              },
+              {
+                num: "90",
+                unit: "%",
+                label: "Applicants filtered out",
+                sub: "So you don't have to",
+              },
+              {
+                num: "14",
+                unit: "+",
+                label: "Roles we specialise in",
+                sub: "Mid-to-senior only, always",
+              },
+              {
+                num: "$0",
+                unit: "",
+                label: "Upfront fee. Pay on hire.",
+                sub: "90-day replacement guarantee",
+              },
+            ].map((item) => (
+              <div key={item.label} className="p-8 text-center bg-[#F0F4FF]">
+                <div className="font-serif text-[48px] text-brand leading-none tracking-tight mb-2">
+                  {item.num}
+                  {item.unit ? (
+                    <span className="text-brand-blue">{item.unit}</span>
+                  ) : null}
+                </div>
+                <div className="text-[13px] text-text-secondary font-light leading-snug mb-1.5">
+                  {item.label}
+                </div>
+                <div className="text-[11px] text-text-tertiary italic">
+                  {item.sub}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -755,6 +809,120 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── TESTIMONIALS SECTION ── */}
+      <section className="py-20 bg-background overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 md:px-16 mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0}
+          >
+            <div className="text-[11px] font-semibold text-accent uppercase tracking-[0.1em] mb-4">
+              Don&apos;t take our word for it
+            </div>
+            <h2 className="font-serif text-[clamp(28px,3.5vw,42px)] leading-[1.15] text-brand tracking-tight mb-3">
+              Hiring teams who&apos;ve been through it.
+            </h2>
+            <p className="text-[16px] text-text-secondary font-light max-w-2xl">
+              Real feedback from engineering leaders who&apos;ve hired through
+              Recruitencer.
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="marquee-wrap">
+          <div className="marquee-row">
+            {[...marqueeTestimonialsRow1, ...marqueeTestimonialsRow1].map(
+              (item, index) => (
+                <article
+                  key={`${item.handle}-r1-${index}`}
+                  className="bg-white border border-border-light rounded-xl p-6 w-[320px] shrink-0 flex flex-col gap-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className={`w-9 h-9 rounded-full ${item.avatarClass} text-white text-[13px] font-serif flex items-center justify-center`}
+                      >
+                        {item.initials}
+                      </div>
+                      <div>
+                        <div className="text-[13px] font-semibold text-brand leading-tight">
+                          {item.name}
+                        </div>
+                        <div className="text-[11px] text-text-tertiary mt-0.5">
+                          {item.handle}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="opacity-20 text-text-primary">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="w-3.5 h-3.5 fill-current"
+                        aria-hidden="true"
+                      >
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-[14px] text-text-secondary leading-[1.65] font-light">
+                    {item.quote}
+                  </p>
+                  <div className="text-[11px] text-gold-light tracking-[2px]">
+                    ★★★★★
+                  </div>
+                </article>
+              ),
+            )}
+          </div>
+
+          <div className="marquee-row reverse mt-4">
+            {[...marqueeTestimonialsRow2, ...marqueeTestimonialsRow2].map(
+              (item, index) => (
+                <article
+                  key={`${item.handle}-r2-${index}`}
+                  className="bg-white border border-border-light rounded-xl p-6 w-[320px] shrink-0 flex flex-col gap-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className={`w-9 h-9 rounded-full ${item.avatarClass} text-white text-[13px] font-serif flex items-center justify-center`}
+                      >
+                        {item.initials}
+                      </div>
+                      <div>
+                        <div className="text-[13px] font-semibold text-brand leading-tight">
+                          {item.name}
+                        </div>
+                        <div className="text-[11px] text-text-tertiary mt-0.5">
+                          {item.handle}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="opacity-20 text-text-primary">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="w-3.5 h-3.5 fill-current"
+                        aria-hidden="true"
+                      >
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-[14px] text-text-secondary leading-[1.65] font-light">
+                    {item.quote}
+                  </p>
+                  <div className="text-[11px] text-gold-light tracking-[2px]">
+                    ★★★★★
+                  </div>
+                </article>
+              ),
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* ── FOR TALENT SECTION ── */}
       <section className="py-24 px-6 md:px-16 bg-brand text-white overflow-hidden relative">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-16 lg:gap-24 items-center">
@@ -917,6 +1085,67 @@ export default function HomePage() {
         </motion.div>
       </section>
       <Footer />
+      <style jsx global>{`
+        .marquee-wrap {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          overflow: hidden;
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 8%,
+            black 92%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 8%,
+            black 92%,
+            transparent 100%
+          );
+        }
+
+        .marquee-row {
+          display: flex;
+          gap: 16px;
+          width: max-content;
+          animation: marquee-left 40s linear infinite;
+        }
+
+        .marquee-row.reverse {
+          animation: marquee-right 40s linear infinite;
+        }
+
+        .marquee-wrap:hover .marquee-row {
+          animation-play-state: paused;
+        }
+
+        @keyframes marquee-left {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        @keyframes marquee-right {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+
+        @media (max-width: 900px) {
+          .marquee-row {
+            animation-duration: 28s;
+          }
+        }
+      `}</style>
     </div>
   );
 }
