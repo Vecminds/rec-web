@@ -62,9 +62,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
 
   // ── Handle resume upload ───────────────────────────────────────────────
   let resumeUrl: string | null = null;
-  const resumeFile = formData.get("resume") as File | null;
+  const resumeFile = formData.get("resume");
 
-  if (resumeFile && resumeFile.size > 0) {
+  if (resumeFile && typeof resumeFile === "object" && "arrayBuffer" in resumeFile && resumeFile.size > 0) {
     // Double-check file type and size server-side
     if (resumeFile.type !== "application/pdf") {
       return NextResponse.json(
@@ -80,6 +80,21 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
     }
 
     const fileBuffer = await resumeFile.arrayBuffer();
+
+    // Verify PDF magic bytes (25 50 44 46)
+    const uint8Array = new Uint8Array(fileBuffer);
+    if (
+      uint8Array.length < 4 ||
+      uint8Array[0] !== 0x25 || // %
+      uint8Array[1] !== 0x50 || // P
+      uint8Array[2] !== 0x44 || // D
+      uint8Array[3] !== 0x46    // F
+    ) {
+      return NextResponse.json(
+        { success: false, error: "Invalid file format. Only true PDF files are allowed." },
+        { status: 400 }
+      );
+    }
     const fileName = `${Date.now()}_${resumeFile.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     const storagePath = `submissions/${fileName}`;
 
