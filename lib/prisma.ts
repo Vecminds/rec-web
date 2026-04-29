@@ -19,7 +19,9 @@ const pool =
     connectionString,
   });
 
-if (process.env.NODE_ENV !== "production") {
+const isProd = process.env.NODE_ENV === "production" || !process.env.NODE_ENV;
+
+if (!isProd) {
   globalForPrisma.prismaPool = pool;
 }
 
@@ -32,6 +34,6 @@ export const prisma =
     log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
   });
 
-if (process.env.NODE_ENV !== "production") {
+if (!isProd) {
   globalForPrisma.prisma = prisma;
 }
