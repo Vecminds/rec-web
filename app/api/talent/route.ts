@@ -2,9 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { prisma } from "@/lib/prisma";
 import { talentFormSchema } from "@/lib/validations";
+import { rateLimit } from "@/lib/rate-limit";
 import type { ApiResponse } from "@/types";
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse>> {
+  // ── Rate Limit ─────────────────────────────────────────────────────────
+  const ip = request.headers.get("x-forwarded-for") ?? "unknown-ip";
+  const allowed = rateLimit(ip, { limit: 5, windowMs: 60 * 1000 }); // 5 requests per minute
+  if (!allowed) {
+    return NextResponse.json(
+      { success: false, error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   // ── Parse multipart form data ──────────────────────────────────────────
   let formData: FormData;
   try {
@@ -53,9 +64,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
   try {
     supabase = createServerSupabaseClient();
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Server configuration error.";
+    console.error("Supabase initialization error:", err);
     return NextResponse.json(
-      { success: false, error: message },
+      { success: false, error: "Server configuration error." },
       { status: 500 }
     );
   }

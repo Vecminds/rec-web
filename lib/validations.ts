@@ -104,7 +104,8 @@ export const talentFormSchema = z.object({
         "Invalid work arrangement"
       )
     )
-    .min(1, "Please select at least one work arrangement"),
+    .min(1, "Please select at least one work arrangement")
+    .max(4, "Too many work arrangements selected"),
 
   bio: z
     .string()
