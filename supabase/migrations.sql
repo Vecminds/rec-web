@@ -61,19 +61,15 @@ create table if not exists company_submissions (
 
 -- =============================================================================
 -- Row Level Security
--- Allow only anonymous INSERT — no client-side SELECT
+-- No client-side access allowed. Prisma owns app CRUD logic in API routes.
 -- =============================================================================
 
 alter table talent_submissions enable row level security;
 alter table company_submissions enable row level security;
 
+-- Drop anon policies to restrict anonymous inserts
 drop policy if exists "Allow anon insert talent" on talent_submissions;
-create policy "Allow anon insert talent"
-  on talent_submissions for insert to anon with check (true);
-
 drop policy if exists "Allow anon insert company" on company_submissions;
-create policy "Allow anon insert company"
-  on company_submissions for insert to anon with check (true);
 
 -- =============================================================================
 -- Storage: resumes bucket (private)
