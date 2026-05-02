@@ -52,12 +52,13 @@ Fill in your Supabase credentials (from your Supabase project -> Settings -> API
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 DATABASE_URL=postgresql://postgres.<project-ref>:<password>@aws-<region>.pooler.supabase.com:6543/postgres?pgbouncer=true
 DIRECT_URL=postgresql://postgres.<project-ref>:<password>@aws-<region>.pooler.supabase.com:5432/postgres
 ```
 
 > `DATABASE_URL` is used by Prisma at runtime. `DIRECT_URL` is used for migrate/introspect commands.
-> `SUPABASE_SERVICE_ROLE_KEY` remains optional in the current implementation.
+> `SUPABASE_SERVICE_ROLE_KEY` is required for backend file uploads bypassing RLS.
 
 ### 4. Bootstrap database objects (fresh project only)
 
