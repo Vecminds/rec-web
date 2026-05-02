@@ -1,9 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { companyFormSchema } from "@/lib/validations";
+import { rateLimit } from "@/lib/rate-limit";
 import type { ApiResponse } from "@/types";
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse>> {
+  // ── Rate Limiting ──────────────────────────────────────────────────────
+  const rl = rateLimit(request);
+  if (!rl.success) {
+    return NextResponse.json(
+      { success: false, error: "Too many requests. Please try again later." },
+      {
+        status: 429,
+        headers: {
+          "X-RateLimit-Limit": rl.limit.toString(),
+          "X-RateLimit-Remaining": rl.remaining.toString(),
+          "X-RateLimit-Reset": rl.reset.toString(),
+        },
+      }
+    );
+  }
+
   // ── Parse JSON body ────────────────────────────────────────────────────
   let body: unknown;
   try {

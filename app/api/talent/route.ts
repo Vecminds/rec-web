@@ -2,9 +2,26 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { prisma } from "@/lib/prisma";
 import { talentFormSchema } from "@/lib/validations";
+import { rateLimit } from "@/lib/rate-limit";
 import type { ApiResponse } from "@/types";
 
 export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse>> {
+  // ── Rate Limiting ──────────────────────────────────────────────────────
+  const rl = rateLimit(request);
+  if (!rl.success) {
+    return NextResponse.json(
+      { success: false, error: "Too many requests. Please try again later." },
+      {
+        status: 429,
+        headers: {
+          "X-RateLimit-Limit": rl.limit.toString(),
+          "X-RateLimit-Remaining": rl.remaining.toString(),
+          "X-RateLimit-Reset": rl.reset.toString(),
+        },
+      }
+    );
+  }
+
   // ── Parse multipart form data ──────────────────────────────────────────
   let formData: FormData;
   try {
@@ -53,9 +70,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
   try {
     supabase = createServerSupabaseClient();
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Server configuration error.";
+    // Return a generic error message to prevent leaking internal error details
+    console.error("Supabase init error:", err);
     return NextResponse.json(
-      { success: false, error: message },
+      { success: false, error: "An unexpected error occurred. Please try again later." },
       { status: 500 }
     );
   }
