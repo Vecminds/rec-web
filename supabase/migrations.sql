@@ -61,19 +61,15 @@ create table if not exists company_submissions (
 
 -- =============================================================================
 -- Row Level Security
--- Allow only anonymous INSERT — no client-side SELECT
+-- No anonymous insert — rely purely on server-side inserts (Prisma)
 -- =============================================================================
 
 alter table talent_submissions enable row level security;
 alter table company_submissions enable row level security;
 
 drop policy if exists "Allow anon insert talent" on talent_submissions;
-create policy "Allow anon insert talent"
-  on talent_submissions for insert to anon with check (true);
 
 drop policy if exists "Allow anon insert company" on company_submissions;
-create policy "Allow anon insert company"
-  on company_submissions for insert to anon with check (true);
 
 -- =============================================================================
 -- Storage: resumes bucket (private)
@@ -93,8 +89,5 @@ on conflict (id) do update
       file_size_limit  = excluded.file_size_limit,
       allowed_mime_types = excluded.allowed_mime_types;
 
--- Allow anonymous users to upload to the resumes bucket
+-- Disallow anonymous users to upload to the resumes bucket
 drop policy if exists "Allow anon upload resumes" on storage.objects;
-create policy "Allow anon upload resumes"
-  on storage.objects for insert to anon
-  with check (bucket_id = 'resumes');
