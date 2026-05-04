@@ -20,6 +20,10 @@ export const talentFormSchema = z.object({
     .max(255, "LinkedIn URL must be under 255 characters")
     .url("Please enter a valid URL")
     .refine(
+      (url) => url.toLowerCase().startsWith("http://") || url.toLowerCase().startsWith("https://"),
+      "Must be a valid HTTP/HTTPS URL"
+    )
+    .refine(
       (url) => url.includes("linkedin.com"),
       "Please enter a valid LinkedIn URL"
     ),
@@ -28,6 +32,10 @@ export const talentFormSchema = z.object({
     .string()
     .max(255, "GitHub URL must be under 255 characters")
     .url("Please enter a valid URL")
+    .refine(
+      (url) => url.toLowerCase().startsWith("http://") || url.toLowerCase().startsWith("https://"),
+      "Must be a valid HTTP/HTTPS URL"
+    )
     .optional()
     .or(z.literal("")),
 
@@ -54,6 +62,7 @@ export const talentFormSchema = z.object({
   primary_role: z
     .string()
     .min(1, "Please select your primary role")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) =>
         [
@@ -71,6 +80,7 @@ export const talentFormSchema = z.object({
   years_experience: z
     .string()
     .min(1, "Please select your years of experience")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) => ["2–3 years", "3–5 years", "5–8 years", "8+ years"].includes(v),
       "Please select a valid experience range"
@@ -84,6 +94,7 @@ export const talentFormSchema = z.object({
   employment_status: z
     .string()
     .min(1, "Please select your employment status")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) =>
         ["Actively looking", "Open to opportunities", "Not looking right now"].includes(v),
@@ -98,13 +109,16 @@ export const talentFormSchema = z.object({
 
   work_arrangement: z
     .array(
-      z.string().refine(
-        (v) =>
-          ["Fully remote", "Contract", "Full-time employment", "Freelance"].includes(v),
-        "Invalid work arrangement"
-      )
+      z.string()
+        .max(100, "Must be under 100 characters")
+        .refine(
+          (v) =>
+            ["Fully remote", "Contract", "Full-time employment", "Freelance"].includes(v),
+          "Invalid work arrangement"
+        )
     )
-    .min(1, "Please select at least one work arrangement"),
+    .min(1, "Please select at least one work arrangement")
+    .max(10, "Too many selections"),
 
   bio: z
     .string()
@@ -127,7 +141,11 @@ export const companyFormSchema = z.object({
     .string()
     .min(1, "Company website is required")
     .max(255, "Company website must be under 255 characters")
-    .url("Please enter a valid URL"),
+    .url("Please enter a valid URL")
+    .refine(
+      (url) => url.toLowerCase().startsWith("http://") || url.toLowerCase().startsWith("https://"),
+      "Must be a valid HTTP/HTTPS URL"
+    ),
 
   contact_name: z
     .string()
@@ -158,6 +176,7 @@ export const companyFormSchema = z.object({
   company_size: z
     .string()
     .min(1, "Please select your company size")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) => ["1–10 (startup)", "11–50", "51–200", "201–500", "500+"].includes(v),
       "Please select a valid company size"
@@ -176,6 +195,7 @@ export const companyFormSchema = z.object({
   role_type: z
     .string()
     .min(1, "Please select a role type")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) =>
         [
@@ -193,6 +213,7 @@ export const companyFormSchema = z.object({
   seniority_level: z
     .string()
     .min(1, "Please select a seniority level")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) =>
         ["Mid-level (2–5 years)", "Senior (5–8 years)", "Lead / Staff (8+ years)"].includes(v),
@@ -202,6 +223,7 @@ export const companyFormSchema = z.object({
   number_of_roles: z
     .string()
     .min(1, "Please select the number of roles")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) => ["1", "2", "3", "4", "5+"].includes(v),
       "Please select a valid number"
@@ -210,6 +232,7 @@ export const companyFormSchema = z.object({
   employment_type: z
     .string()
     .min(1, "Please select an employment type")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) =>
         ["Full-time permanent", "Contract (fixed term)", "Contract-to-hire", "Freelance"].includes(v),
@@ -219,6 +242,7 @@ export const companyFormSchema = z.object({
   work_arrangement: z
     .string()
     .min(1, "Please select a work arrangement")
+    .max(100, "Must be under 100 characters")
     .refine(
       (v) => ["Fully remote", "Remote with occasional travel"].includes(v),
       "Please select a valid work arrangement"
