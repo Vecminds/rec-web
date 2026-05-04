@@ -53,9 +53,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
   try {
     supabase = createServerSupabaseClient();
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Server configuration error.";
+    console.error("Supabase client init error:", err);
     return NextResponse.json(
-      { success: false, error: message },
+      { success: false, error: "Internal server error." },
       { status: 500 }
     );
   }
@@ -142,7 +142,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
   } catch (error) {
     console.error("Prisma insert error:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to save your profile. Please try again." },
+      { success: false, error: "Internal server error." },
       { status: 500 }
     );
   }

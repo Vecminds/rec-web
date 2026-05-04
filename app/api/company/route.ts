@@ -66,7 +66,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
   } catch (error) {
     console.error("Prisma insert error:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to submit your request. Please try again." },
+      { success: false, error: "Internal server error." },
       { status: 500 }
     );
   }

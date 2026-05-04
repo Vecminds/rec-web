@@ -61,19 +61,16 @@ create table if not exists company_submissions (
 
 -- =============================================================================
 -- Row Level Security
--- Allow only anonymous INSERT — no client-side SELECT
+-- No client-side access allowed (inserts must go through server-side Prisma)
 -- =============================================================================
 
 alter table talent_submissions enable row level security;
 alter table company_submissions enable row level security;
 
+-- Removing all anonymous insert policies.
+-- Infrastructure actions (like resume uploads) should bypass RLS via the service role key on the server.
 drop policy if exists "Allow anon insert talent" on talent_submissions;
-create policy "Allow anon insert talent"
-  on talent_submissions for insert to anon with check (true);
-
 drop policy if exists "Allow anon insert company" on company_submissions;
-create policy "Allow anon insert company"
-  on company_submissions for insert to anon with check (true);
 
 -- =============================================================================
 -- Storage: resumes bucket (private)
@@ -93,8 +90,6 @@ on conflict (id) do update
       file_size_limit  = excluded.file_size_limit,
       allowed_mime_types = excluded.allowed_mime_types;
 
--- Allow anonymous users to upload to the resumes bucket
+-- Revoke anonymous access to the resumes bucket.
+-- Resume uploads should be authenticated via service role key on the server.
 drop policy if exists "Allow anon upload resumes" on storage.objects;
-create policy "Allow anon upload resumes"
-  on storage.objects for insert to anon
-  with check (bucket_id = 'resumes');
