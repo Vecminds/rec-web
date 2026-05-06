@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-server";
 import { prisma } from "@/lib/prisma";
 import { talentFormSchema } from "@/lib/validations";
 import type { ApiResponse } from "@/types";
@@ -35,6 +35,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
     bio: (formData.get("bio") as string) || undefined,
   };
 
+  // ── Extract Network Metadata ───────────────────────────────────────────
+  const ip_address = request.headers.get('x-forwarded-for') || null;
+  const user_agent = request.headers.get('user-agent') || null;
+
   // ── Validate with Zod ─────────────────────────────────────────────────
   const parsed = talentFormSchema.safeParse(rawData);
   if (!parsed.success) {
@@ -51,7 +55,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
   // ── Init Supabase (infra: storage upload only) ───────────────────────
   let supabase;
   try {
-    supabase = createServerSupabaseClient();
+    supabase = createAdminSupabaseClient();
   } catch (err) {
     const message = err instanceof Error ? err.message : "Server configuration error.";
     return NextResponse.json(
@@ -137,10 +141,21 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
       work_arrangement: parsed.data.work_arrangement,
       bio: parsed.data.bio ?? null,
       resume_url: resumeUrl,
+      ip_address,
+      user_agent,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Prisma insert error:", error);
+
+    // Handle Prisma unique constraint violation (P2002) for email
+    if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
+      return NextResponse.json(
+        { success: false, error: "A submission with this email address already exists." },
+        { status: 409 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: "Failed to save your profile. Please try again." },
       { status: 500 }

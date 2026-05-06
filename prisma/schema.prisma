@@ -10,7 +10,7 @@ model TalentSubmission {
   id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   created_at         DateTime? @default(now()) @db.Timestamptz(6)
   full_name          String
-  email              String
+  email              String    @unique
   linkedin_url       String
   github_url         String?
   location           String
@@ -25,6 +25,8 @@ model TalentSubmission {
   resume_url         String?
   country            String?
   phone              String?
+  ip_address         String?
+  user_agent         String?
 
   @@map("talent_submissions")
 }
@@ -36,7 +38,7 @@ model CompanySubmission {
   company_website   String
   contact_name      String
   contact_title     String
-  contact_email     String
+  contact_email     String    @unique
   company_size      String
   company_location  String
   role_title        String
@@ -51,6 +53,8 @@ model CompanySubmission {
   role_description  String?
   country           String?
   phone             String?
+  ip_address        String?
+  user_agent        String?
 
   @@map("company_submissions")
 }

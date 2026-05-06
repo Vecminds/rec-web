@@ -15,6 +15,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
     );
   }
 
+  // ── Extract Network Metadata ───────────────────────────────────────────
+  const ip_address = request.headers.get('x-forwarded-for') || null;
+  const user_agent = request.headers.get('user-agent') || null;
+
   // ── Validate with Zod ─────────────────────────────────────────────────
   const parsed = companyFormSchema.safeParse(body);
   if (!parsed.success) {
@@ -61,10 +65,21 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
       salary_budget: data.salary_budget ?? null,
       target_start_date: targetStartDate,
       role_description: data.role_description ?? null,
+      ip_address,
+      user_agent,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Prisma insert error:", error);
+
+    // Handle Prisma unique constraint violation (P2002) for email
+    if (error.code === 'P2002' && error.meta?.target?.includes('contact_email')) {
+      return NextResponse.json(
+        { success: false, error: "A submission with this email address already exists." },
+        { status: 409 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: "Failed to submit your request. Please try again." },
       { status: 500 }
