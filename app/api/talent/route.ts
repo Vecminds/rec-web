@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-server";
 import { prisma } from "@/lib/prisma";
 import { talentFormSchema } from "@/lib/validations";
 import type { ApiResponse } from "@/types";
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
   // ── Init Supabase (infra: storage upload only) ───────────────────────
   let supabase;
   try {
-    supabase = createServerSupabaseClient();
+    supabase = createAdminSupabaseClient();
   } catch (err) {
     const message = err instanceof Error ? err.message : "Server configuration error.";
     return NextResponse.json(
