@@ -61,19 +61,17 @@ create table if not exists company_submissions (
 
 -- =============================================================================
 -- Row Level Security
--- Allow only anonymous INSERT — no client-side SELECT
 -- =============================================================================
 
 alter table talent_submissions enable row level security;
 alter table company_submissions enable row level security;
 
+-- Drop previous insecure anonymous insert policies if they exist
 drop policy if exists "Allow anon insert talent" on talent_submissions;
-create policy "Allow anon insert talent"
-  on talent_submissions for insert to anon with check (true);
-
 drop policy if exists "Allow anon insert company" on company_submissions;
-create policy "Allow anon insert company"
-  on company_submissions for insert to anon with check (true);
+
+-- Note: No anonymous access is permitted.
+-- All database interactions must be done via Prisma using a secure server environment.
 
 -- =============================================================================
 -- Storage: resumes bucket (private)
@@ -93,8 +91,7 @@ on conflict (id) do update
       file_size_limit  = excluded.file_size_limit,
       allowed_mime_types = excluded.allowed_mime_types;
 
--- Allow anonymous users to upload to the resumes bucket
+-- Drop previous insecure anonymous upload policy if it exists
 drop policy if exists "Allow anon upload resumes" on storage.objects;
-create policy "Allow anon upload resumes"
-  on storage.objects for insert to anon
-  with check (bucket_id = 'resumes');
+
+-- Note: File uploads must be securely performed server-side using the SUPABASE_SERVICE_ROLE_KEY.
